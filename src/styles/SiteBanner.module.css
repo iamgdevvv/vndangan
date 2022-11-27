@@ -1,0 +1,109 @@
+.site_banner {
+	@apply relative w-full h-screen p-80px flex flex-col justify-end;
+	@apply 2xl: (px-120px);
+
+	&>* {
+		@apply relative z-2;
+	}
+}
+
+.banner_images {
+	@apply absolute top-0 left-0 w-full h-full z-1 overflow-hidden;
+	@apply before: (_content absolute top-0 left-0 z-2 w-full h-full bg-zinc-900/68);
+
+	[class~="splide__track"],
+	[class~="figure-image"],
+	[class~="image-wrapper"],
+	img {
+		@apply w-full h-full;
+	}
+
+	[class~="splide__track"] {
+		@apply z-1;
+	}
+
+	[class~="splide__arrows"] {
+		@apply absolute top-4px left-0 z-4 w-full h-full;
+
+		[class~="splide__arrow"] {
+			@apply absolute top-0 left-0 w-1/2 h-full opacity-0 transform-none;
+
+			&[class~="splide__arrow--next"] {
+				@apply left-1/2;
+			}
+		}
+	}
+
+	[class~="splide__pagination"] {
+		@apply absolute top-2px left-0 bottom-auto z-3 flex flex-nowrap w-full px-1px;
+
+		li {
+			@apply w-full flex px-2px;
+		}
+
+		[class~="splide__pagination__page"] {
+			@apply static w-full h-3px m-0 rounded-none transform-gpu scale-100 bg-white opacity-40 rounded-full transition;
+
+			&[class~="is-active"] {
+				@apply opacity-100;
+			}
+		}
+	}
+}
+
+.banner_content {
+	@apply w-814px max-w-full text-white pointer-events-none;
+
+	h1,
+	h2 {
+		@apply font-bold text-h1;
+	}
+}
+
+.banner_agenda {
+	@apply w-full mt-40px;
+
+	[class~='splide__track'] {
+		@apply  pt-20px;
+	}
+
+	[class~='splide__list'] {
+		@apply inline-flex;
+	}
+
+	[class~='splide__slide'] {
+		@apply relative !w-auto !opacity-100;
+		@apply before:(_content absolute top-0 left-0 w-600px max-w-full h-10px bg-white rounded-t-8px transform-gpu opacity-0 -translate-y-[100%] scale-96 transition duration-400);
+
+		&[class~='is-active'] {
+			@apply before:(-translate-y-[200%] scale-90 opacity-60);
+	
+			.slide_agenda {
+				@apply translate-y-0 scale-100 opacity-100;
+			}
+	
+		}
+	}
+
+	.slide_agenda {
+		@apply relative w-600px max-w-full p-20px pl-42px rounded-8px bg-white transform-gpu -translate-y-15px scale-96 opacity-80 transition duration-400;
+		@apply before: (_content absolute top-20px left-20px w-2px h-[calc(100%-40px)] bg-teal-400);
+		@apply after: (_content absolute top-0 left-0 z-1 w-full h-full bg-no-repeat bg-right-bottom opacity-30);
+
+		&::after {
+			background-image: url('/images/ornamen-agenda.svg');
+		}
+
+		a {
+			@apply relative z-3;
+		}
+
+		a[class*='cta_action_agenda__calendar'] {
+			@apply absolute top-0 left-0 w-full h-full z-2 bg-transparent items-start justify-end text-0px;
+		}
+
+		a[class*='cta_action_agenda__map'] {
+			@apply hidden;
+		}
+	}
+}

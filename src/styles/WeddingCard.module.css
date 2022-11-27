@@ -1,0 +1,172 @@
+.wedding_card_wrapper {
+	@apply w-full bg-zinc-200;
+	@apply 2xl: (pt-40px pl-40px pr-20px pb-20px);
+	@apply <2xl: (pt-30px pl-30px pr-10px pb-10px);
+	@apply <2xl: (pt-20px pl-20px pr-10px pb-10px);
+}
+
+.wedding_cards {
+	@apply w-full h-full;
+
+	&>[class~='splide__track'] {
+		@apply h-full !pr-20px pb-20px overflow-visible;
+
+		&>[class~='splide__list'] {
+			@apply h-full;
+
+			&>[class~='splide__slide'] {
+				@apply before: (_content absolute top-0 right-0 z-2 w-full h-full bg-white rounded-20px opacity-0 transform-gpu translate-x-0 translate-y-0 transition);
+				@apply after: (_content absolute top-0 right-0 z-1 w-full h-full bg-white rounded-20px opacity-0 transform-gpu translate-x-10px translate-y-10px transition);
+
+				&[class~='is-active'] {
+					@apply before: (opacity-80 translate-x-10px translate-y-10px);
+					@apply after: (opacity-60 translate-x-20px translate-y-20px);
+
+					.item_wedding_card {
+						@apply translate-x-0 translate-y-0;
+					}
+				}
+			}
+		}
+	}
+
+	&>[class~='splide__arrows'] {
+		@apply absolute bottom-40px left-0 w-full h-48px flexs-center;
+
+		[class~='splide__arrow'] {
+			@apply static w-48px h-full rounded-6px shadow shadow-zinc-200 text-20px opacity-100 bg-teal-50 text-teal-400 transform-none;
+			@apply hover: (bg-teal-100);
+
+			&+[class~='splide__arrow'] {
+				@apply ml-10px;
+			}
+
+			svg {
+				@apply fill-current transform-none;
+			}
+		}
+	}
+
+	.item_wedding_card {
+		@apply relative z-3 w-full h-full flex flex-col bg-white rounded-20px shadow shadow-zinc-200 transform-gpu translate-x-10px translate-y-10px transition;
+		@apply before: (_content absolute -top-10px -left-10px z-1 w-full h-full bg-transparent bg-no-repeat opacity-30);
+		@apply after: (_content absolute -bottom-10px -right-10px z-2 w-full h-full bg-transparent bg-no-repeat opacity-30);
+		@apply 2xl: (p-40px pb-128px);
+		@apply <2xl: (p-20px pb-88px);
+
+		&>* {
+			@apply relative z-3;
+		}
+
+		&:before {
+			@apply bg-left-top;
+			background-image: url('/images/ornamen-wedding-top.svg');
+		}
+
+		&:after {
+			@apply bg-right-bottom;
+			background-image: url('/images/ornamen-wedding-bottom.svg');
+		}
+	}
+
+	.title_wedding_card {
+		@apply text-center font-bold;
+		@apply 2xl: (text-48px);
+		@apply xl: (text-42px mb-28px);
+		@apply <xl: (text-36px mb-20px);
+	}
+}
+
+.photo_wedding_identity {
+	@apply w-full flexs-center mb-auto;
+
+	[class~='image-wrapper'] {
+		@apply relative w-160px h-160px;
+		@apply after: (_content absolute top-0 left-0 z-2 w-full h-full bg-contain bg-no-repeat);
+
+		&:after {
+			background-image: url('/images/love-mask.png');
+		}
+	}
+
+	img {
+		@apply block w-full h-full;
+	}
+}
+
+.brides_wedding_identity {
+
+	&+.brides_wedding_identity {
+		@apply mt-20px;
+	}
+
+	span {
+		@apply block;
+	}
+
+	.brides_identity_sublabel {
+		@apply text-12px text-zinc-500 leading-relaxed uppercase mb-6px;
+	}
+
+	.brides_identity_name {
+		@apply text-20px font-semibold leading-relaxed capitalize mb-6px;
+	}
+}
+
+.brides_wedding_invitation {
+	@apply mt-40px;
+
+	span {
+		@apply block;
+	}
+
+	.brides_invitation_sublabel {
+		@apply text-14px leading-relaxed mb-6px;
+	}
+
+	.brides_invitation_name {
+		@apply text-28px font-bold leading-relaxed mb-10px;
+	}
+
+	.brides_invitation_info {
+		@apply text-10px text-zinc-600 leading-relaxed;
+
+		.brides_invitation_info_mark {
+			@apply inline text-rose-500;
+		}
+	}
+}
+
+.gallery_wedding {
+	@apply 2xl: (-mx-40px);
+	@apply <2xl: (-mx-20px);
+
+	[class~='splide__track'] {
+		@apply 2xl: ( !pl-40px);
+		@apply <2xl: ( !pl-20px);
+	}
+
+	[class~='splide__slide'] {
+		@apply cursor-pointer opacity-100 transition;
+
+		&:not([class~='is-active']) {
+			@apply opacity-20;
+
+			figcaption {
+				@apply opacity-0;
+			}
+		}
+
+		&[class~='is-prev'] {
+			@apply opacity-0;
+		}
+	}
+
+	.image_gallery_wedding {
+		@apply w-full h-300px object-cover rounded-12px;
+	}
+
+	figcaption {
+		@apply opacity-100 transition mt-10px;
+	}
+}

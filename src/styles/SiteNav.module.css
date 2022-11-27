@@ -1,0 +1,19 @@
+.navbar_vndangan {
+	@apply fixed bottom-20px left-1/2 z-10 px-10px transform-gpu -translate-x-1/2 shadow shadow-zinc-200 bg-white/94 rounded-12px;
+}
+
+.nav_lists_vndangan {
+	@apply flex items-center;
+
+
+	.nav_item_active {
+		.nav_link {
+			@apply text-teal-400;
+		}
+	}
+}
+
+.nav_link {
+	@apply w-60px h-68px flex items-center justify-center text-26px text-zinc-500;
+	@apply hover:(text-teal-400);
+}

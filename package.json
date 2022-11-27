@@ -1,0 +1,46 @@
+{
+	"name": "vndangan",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"dev-turbo": "next dev --turbo",
+		"build": "next build",
+		"start": "next start -p 8002",
+		"lint": "next lint"
+	},
+	"browserslist": [
+		"since 2015"
+	],
+	"dependencies": {
+		"@hookform/resolvers": "^2.9.10",
+		"@loadable/component": "^5.15.2",
+		"@splidejs/react-splide": "^0.7.12",
+		"cors": "^2.8.5",
+		"eslint-plugin-jsx-a11y": "^6.6.1",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-unused-imports": "^2.0.0",
+		"next": "^13.0.0",
+		"next-progress": "^2.2.0",
+		"nope-validator": "^1.0.4",
+		"react": "^18.2.0",
+		"react-date-picker": "^9.0.0",
+		"react-dom": "^18.2.0",
+		"react-hook-form": "^7.38.0",
+		"react-icons": "^4.6.0",
+		"reactjs-popup": "^2.0.5",
+		"validate.js": "^0.13.1",
+		"xss": "^1.0.14"
+	},
+	"devDependencies": {
+		"eslint": "8.26.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-next": "^13.0.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jest": "^27.1.3",
+		"eslint-plugin-react": "^7.31.10",
+		"prettier": "^2.7.1",
+		"windicss-webpack-plugin": "^1.7.7"
+	}
+}

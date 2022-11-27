@@ -1,0 +1,56 @@
+.agenda_wrapper {
+	&+.agenda_wrapper {
+		@apply mt-28px;
+	}
+}
+
+.title_agenda {
+	@apply font-bold text-28px leading-tight capitalize mb-20px;
+}
+
+.info_agenda {
+
+	.item_info_agenda {
+		@apply not-last: (mb-10px);
+
+		&,
+		&>a {
+			@apply flexs;
+		}
+	}
+
+	a {
+		.label_info_agenda {
+			@apply hover: (text-teal-400);
+		}
+	}
+
+	.icon_info_agenda {
+		@apply w-24px text-24px text-teal-400;
+	}
+
+	.label_info_agenda {
+		@apply inline-block w-[calc(100%-24px)] pl-10px text-zinc-900 transition;
+	}
+}
+
+.action_agenda {
+	@apply mt-20px;
+
+	.cta_action_agenda {
+		@apply lg: (not-last:(mr-10px));
+		@apply <lg: (w-full not-last:(mb-10px));
+
+		svg {
+			@apply text-28px pt-2px ml-10px;
+		}
+	}
+
+	.cta_action_agenda__calendar {
+		@apply cta-secondary;
+	}
+
+	.cta_action_agenda__map {
+		@apply cta-primary;
+	}
+}

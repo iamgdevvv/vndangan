@@ -1,0 +1,50 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"es2022": true,
+		"node": true
+	},
+	"plugins": ["react", "jsx-a11y", "import", "unused-imports"],
+	"extends": [
+		"next/core-web-vitals",
+		"airbnb",
+		"airbnb/hooks",
+		"plugin:import/recommended",
+		"plugin:jsx-a11y/recommended",
+		"prettier"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"allowImportExportEverywhere": true
+	},
+	"overrides": [
+		{
+			"files": ["src/**/*.{js,jsx}", "public/**/*.js"]
+		}
+	],
+	"rules": {
+		"object-shorthand": "warn",
+		"arrow-body-style": "warn",
+		"jsx-quotes": ["warn", "prefer-single"],
+		"no-unused-vars": "warn",
+		"import/no-unresolved": "off",
+		"import/extensions": "off",
+		"react-hooks/exhaustive-deps": "warn",
+		"react/no-array-index-key": "warn",
+		"react/no-unknown-property": "warn",
+		"react/function-component-definition": "warn",
+		"react/react-in-jsx-scope": "off",
+		"react/prop-types": "off",
+		"react/destructuring-assignment": "warn",
+		"react/jsx-props-no-spreading": "off",
+		"semi": "error"
+	},
+	"settings": {
+		"import/core-modules": ["virtual:windi.css", "windi.css"]
+	}
+}
