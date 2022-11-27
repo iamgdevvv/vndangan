@@ -44,7 +44,7 @@ export default function WeddingCard({
 			interval: 2000,
 			arrows: false,
 			pagination: false,
-			gap: '10px'
+			gap: '10px',
 		};
 	}, []);
 
@@ -171,7 +171,9 @@ export default function WeddingCard({
 											<ImageVN
 												src={`/images/${itemGallery.src}`}
 												alt={itemGallery.caption}
-												className={styles.image_gallery_wedding}
+												className={
+													styles.image_gallery_wedding
+												}
 											/>
 											<figcaption>
 												{itemGallery.caption}
@@ -183,11 +185,15 @@ export default function WeddingCard({
 						</SplideSlide>
 					) : null}
 				</SplideTrack>
-				<div className={`splide__arrows`}>
-					<button className={`splide__arrow splide__arrow--prev`}>
+				<div className='splide__arrows'>
+					<button
+						type='button'
+						className='splide__arrow splide__arrow--prev'>
 						<BiLeftArrowAlt />
 					</button>
-					<button className={`splide__arrow splide__arrow--next`}>
+					<button
+						type='button'
+						className='splide__arrow splide__arrow--next'>
 						<BiRightArrowAlt />
 					</button>
 				</div>
