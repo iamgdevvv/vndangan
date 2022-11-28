@@ -1,6 +1,6 @@
 import CorsMiddleware from '@modules/cors-middleware';
 
-export default async function agendaApi(req, res) {
+export default async function handler(req, res) {
 	await CorsMiddleware(req, res, {
 		methods: 'GET',
 	});

@@ -22,12 +22,14 @@ export default function ImageVN({
 		/>
 	);
 
-	if (typeof src === 'object' && src?.src) {
+	if (width && height) {
 		imageType = 'figure-next';
 		elImage = (
 			<Image
 				loader={loaderOverride}
 				src={src}
+				width={width}
+				height={height}
 				alt=''
 				{..._props}
 			/>

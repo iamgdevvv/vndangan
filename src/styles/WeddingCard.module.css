@@ -48,7 +48,7 @@
 	}
 
 	.item_wedding_card {
-		@apply relative z-3 w-full h-full flex flex-col bg-white rounded-20px shadow shadow-zinc-200 transform-gpu translate-x-10px translate-y-10px transition;
+		@apply relative z-3 w-full h-full flex flex-col bg-white rounded-20px shadow shadow-zinc-200 transform-gpu translate-x-10px translate-y-10px transition overflow-hidden;
 		@apply before: (_content absolute -top-10px -left-10px z-1 w-full h-full bg-transparent bg-no-repeat opacity-30);
 		@apply after: (_content absolute -bottom-10px -right-10px z-2 w-full h-full bg-transparent bg-no-repeat opacity-30);
 		@apply 2xl: (p-40px pb-128px);
@@ -66,6 +66,26 @@
 		&:after {
 			@apply bg-right-bottom;
 			background-image: url('/images/ornamen-wedding-bottom.svg');
+		}
+
+		.background_bridgegroom {
+			@apply absolute z-1 w-400px transform-gpu opacity-20;
+
+			&.background_bridgegroom__left {
+				@apply bottom-60px left-0 -translate-x-1/2;
+			}
+
+			&.background_bridgegroom__right {
+				@apply top-1/2 right-0 translate-x-1/2 -translate-y-1/2;
+			}
+
+			[class~='image-wrapper'] {
+				@apply aspect-square;
+			}
+
+			img {
+				@apply w-full h-full rounded-full;
+			}
 		}
 	}
 
@@ -138,27 +158,41 @@
 }
 
 .gallery_wedding {
+	@apply mb-40px;
 	@apply 2xl: (-mx-40px);
 	@apply <2xl: (-mx-20px);
 
 	[class~='splide__track'] {
-		@apply 2xl: ( !pl-40px);
-		@apply <2xl: ( !pl-20px);
+		@apply 2xl: ( !pl-40px !pr-[20%]);
+		@apply <2xl: ( !pl-20px !pr-[20%]);
 	}
 
 	[class~='splide__slide'] {
 		@apply cursor-pointer opacity-100 transition;
 
 		&:not([class~='is-active']) {
-			@apply opacity-20;
-
-			figcaption {
-				@apply opacity-0;
-			}
+			@apply opacity-80;
 		}
 
 		&[class~='is-prev'] {
-			@apply opacity-0;
+			@apply opacity-20;
+		}
+	}
+
+	[class~='splide__pagination'] {
+		@apply absolute top-10px bottom-auto left-auto right-10px w-auto inline-flex flex-col p-0;
+
+		li {
+			@apply flex;
+			@apply not-last: (mb-6px);
+		}
+
+		[class~='splide__pagination__page'] {
+			@apply w-10px h-10px m-0 bg-teal-400 opacity-40;
+
+			&[class~='is-active'] {
+				@apply opacity-100;
+			}
 		}
 	}
 
@@ -167,6 +201,84 @@
 	}
 
 	figcaption {
-		@apply opacity-100 transition mt-10px;
+		@apply text-14px leading-relaxed mt-10px opacity-100 transition;
+	}
+}
+
+.title_love_stories {
+	@apply text-32px leading-tight mb-20px;
+}
+
+.love_stories {
+	@apply flex flex-col;
+
+	li {
+		@apply flexs;
+		@apply not-last: (mb-10px);
+		@apply even: (flex-row-reverse);
+
+		&:nth-child(even) {
+			.desc_love_story {
+				@apply text-right pr-20px pl-0;
+			}
+		}
+	}
+
+	.thumb_love_story {
+		@apply w-80px;
+
+		[class~='image-wrapper'] {
+			@apply aspect-square;
+		}
+
+		img {
+			@apply w-full h-full rounded-8px;
+		}
+	}
+
+	.desc_love_story {
+		@apply w-[calc(100%-80px)] pl-20px text-14px leading-relaxed;
+	}
+
+	.date_love_story {
+		@apply block font-semibold mb-4px;
+	}
+}
+
+.bridegroom_wrapper {
+	@apply flex items-start justify-between -mx-10px;
+	@apply @xl: (px-20px);
+
+	.item_bridegroom {
+		@apply px-10px;
+	}
+
+	.title_bridegroom {
+		@apply text-32px leading-tight capitalize mb-20px;
+	}
+}
+
+.lists_bridegroom {
+	@apply w-full;
+
+	li {
+		@apply flexs;
+		@apply not-last: (mb-10px);
+	}
+
+	.thumb_bridegroom {
+		@apply w-68px;
+
+		[class~='image-wrapper'] {
+			@apply aspect-square;
+		}
+
+		img {
+			@apply w-full h-full rounded-full;
+		}
+	}
+
+	.name_bridegroom {
+		@apply text-18px leading-relaxed font-semibold w-[calc(100%-68px)] pl-20px;
 	}
 }

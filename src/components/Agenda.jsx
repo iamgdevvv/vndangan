@@ -2,10 +2,11 @@ import xss from 'xss';
 import { isObject } from 'validate.js';
 import { BiAlarm, BiCalendar, BiMap, BiCalendarPlus } from 'react-icons/bi';
 import {
-	nameMonthbyDate,
 	number2digits,
 	stringCapitalize,
-	escapeHtml
+	escapeHtml,
+	printDate,
+	printTime
 } from '@modules/utils';
 import styles from '@styles/Agenda.module.css';
 import Link from 'next/link';
@@ -20,18 +21,10 @@ export default function Agenda({ data = {}, intro = {}, title = '', className = 
 		let getDataTime = '';
 
 		if (data?.dateStart) {
-			const timeStart = new Date(data?.dateStart);
-
-			getDataTime = `${number2digits(
-				timeStart.getHours()
-			)} : ${number2digits(timeStart.getMinutes())}`;
+			getDataTime = printTime(data?.dateStart);
 
 			if (data?.isDateRange && data?.dateEnd) {
-				const timeEnd = new Date(data?.dateEnd);
-
-				getDataTime = `${getDataTime} - ${number2digits(
-					timeEnd.getHours()
-				)} : ${number2digits(timeEnd.getMinutes())}`;
+				getDataTime = `${getDataTime} - ${printTime(data?.dateEnd)}`;
 			} else {
 				getDataTime = `${getDataTime} - Selesai`;
 			}
@@ -44,16 +37,10 @@ export default function Agenda({ data = {}, intro = {}, title = '', className = 
 		let getDataDate = '';
 
 		if (data?.dateStart) {
-			const dateStart = new Date(data?.dateStart);
-			getDataDate = `${number2digits(
-				dateStart.getDate()
-			)} ${nameMonthbyDate(dateStart)} ${dateStart.getFullYear()}`;
+			getDataDate = printDate(data?.dateStart);
 
 			if (data?.isDateRange && data?.dateEnd) {
-				const dateEnd = new Date(data?.dateEnd);
-				getDataDate = `${getDataDate} - ${number2digits(
-					dateEnd.getDate()
-				)} ${nameMonthbyDate(dateEnd)} ${dateEnd.getFullYear()}`;
+				getDataDate = `${getDataDate} - ${printDate(data?.dateEnd)}`;
 			}
 		}
 

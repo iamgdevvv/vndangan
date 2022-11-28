@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export default function assets(req, res) {
+export default function handler(req, res) {
 	const dirRelativeToPublicFolder = req?.query?.dir ?? '';
 
 	try {

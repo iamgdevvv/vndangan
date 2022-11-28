@@ -1,24 +1,28 @@
 import { useMemo, useState, useCallback } from 'react';
-import { isObject, isArray } from 'validate.js';
+import { isObject, isArray, isEmpty } from 'validate.js';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import { printDate } from '@modules/utils';
 import ImageVN from '@components/ImageVN';
 import Agenda from '@components/Agenda';
 import styles from '@styles/WeddingCard.module.css';
+import FormGuest from '@components/FormGuest';
 
 export default function WeddingCard({
 	identity = {},
 	agenda = [],
 	gallery = [],
+	loveStories = [],
+	brideGroom = [],
 	name = '',
 	className = '',
 }) {
-	const [popupGallery, setPopupGallery] = useState(0);
+	const [popupGallery, setPopupGallery] = useState(false);
 
 	const closePopupGallery = useCallback(() => {
-		setPopupGallery(0);
+		setPopupGallery(false);
 	}, [popupGallery]);
 
 	const confWeddingSplide = useMemo(() => {
@@ -30,20 +34,20 @@ export default function WeddingCard({
 			interval: 3000,
 			arrows: true,
 			pagination: false,
+			autoHeight: true,
 		};
 	}, []);
 
 	const confGallerySplide = useMemo(() => {
 		return {
-			type: 'loop',
-			perPage: 1.2,
-			perMove: 1,
-			rewind: false,
+			type: 'slide',
+			perPage: 1,
+			rewind: true,
 			drag: true,
 			autoplay: true,
 			interval: 2000,
 			arrows: false,
-			pagination: false,
+			pagination: true,
 			gap: '10px',
 		};
 	}, []);
@@ -55,7 +59,7 @@ export default function WeddingCard({
 				options={confWeddingSplide}
 				className={styles.wedding_cards}>
 				<SplideTrack>
-					{isObject(identity) ? (
+					{!isEmpty(identity) && isObject(identity) ? (
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
@@ -138,7 +142,7 @@ export default function WeddingCard({
 							</div>
 						</SplideSlide>
 					) : null}
-					{isArray(agenda) ? (
+					{!isEmpty(agenda) && isArray(agenda) ? (
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
@@ -153,7 +157,10 @@ export default function WeddingCard({
 							</div>
 						</SplideSlide>
 					) : null}
-					{isArray(gallery) ? (
+					{!isEmpty(gallery) &&
+					isArray(gallery) &&
+					!isEmpty(loveStories) &&
+					isArray(loveStories) ? (
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
@@ -163,17 +170,17 @@ export default function WeddingCard({
 									options={confGallerySplide}
 									className={styles.gallery_wedding}>
 									{gallery.map((itemGallery, index) => (
-										<SplideSlide
-											key={`image-${index}`}
-											onClick={() =>
-												setPopupGallery(index + 1)
-											}>
+										<SplideSlide key={`image-${index}`}>
 											<ImageVN
 												src={`/images/${itemGallery.src}`}
 												alt={itemGallery.caption}
 												className={
 													styles.image_gallery_wedding
 												}
+												onClick={() => {
+													console.log('index', index);
+													setPopupGallery(index);
+												}}
 											/>
 											<figcaption>
 												{itemGallery.caption}
@@ -181,9 +188,119 @@ export default function WeddingCard({
 										</SplideSlide>
 									))}
 								</Splide>
+								<h3 className={styles.title_love_stories}>
+									Cerita Kisah Cinta
+								</h3>
+								<ul className={styles.love_stories}>
+									{loveStories.map((item, index) => (
+										<li key={`item-${index}`}>
+											<ImageVN
+												src={`/images/${item.image}`}
+												parentClass={
+													styles.thumb_love_story
+												}
+											/>
+											<div
+												className={
+													styles.desc_love_story
+												}>
+												<span
+													className={
+														styles.date_love_story
+													}>
+													{printDate(item.dateStory)}
+												</span>
+												{item.desc}
+											</div>
+										</li>
+									))}
+								</ul>
 							</div>
 						</SplideSlide>
 					) : null}
+					{!isEmpty(brideGroom) && isArray(brideGroom) ? (
+						<SplideSlide>
+							<div className={styles.item_wedding_card}>
+								<h2 className={styles.title_wedding_card}>
+									Pengiring Mempelai
+								</h2>
+								<div className={styles.bridegroom_wrapper}>
+									<div className={styles.item_bridegroom}>
+										<h3 className={styles.title_bridegroom}>
+											groomsman
+										</h3>
+										<ul className={styles.lists_bridegroom}>
+											{brideGroom
+												.filter(
+													(item) =>
+														item.type === 'groom'
+												)
+												.map((item, index) => (
+													<li key={`item-${index}`}>
+														<ImageVN
+															src={`/images/${item.avatar}`}
+															parentClass={
+																styles.thumb_bridegroom
+															}
+														/>
+														<span
+															className={
+																styles.name_bridegroom
+															}>
+															{item.name}
+														</span>
+													</li>
+												))}
+										</ul>
+									</div>
+									<div className={styles.item_bridegroom}>
+										<h3 className={styles.title_bridegroom}>
+											bridesmaid
+										</h3>
+										<ul className={styles.lists_bridegroom}>
+											{brideGroom
+												.filter(
+													(item) =>
+														item.type === 'bride'
+												)
+												.map((item, index) => (
+													<li key={`item-${index}`}>
+														<ImageVN
+															src={`/images/${item.avatar}`}
+															parentClass={
+																styles.thumb_bridegroom
+															}
+														/>
+														<span
+															className={
+																styles.name_bridegroom
+															}>
+															{item.name}
+														</span>
+													</li>
+												))}
+										</ul>
+									</div>
+								</div>
+								<ImageVN
+									src='/images/asdrubal-luna.jpg'
+									parentClass={`${styles.background_bridgegroom} ${styles.background_bridgegroom__left}`}
+								/>
+								<ImageVN
+									src='/images/asdrubal-luna.jpg'
+									parentClass={`${styles.background_bridgegroom} ${styles.background_bridgegroom__right}`}
+								/>
+							</div>
+						</SplideSlide>
+					) : null}
+					<SplideSlide>
+						<div className={styles.item_wedding_card}>
+							<h2 className={styles.title_wedding_card}>
+								Buku Tamu & Tanda Kasih
+							</h2>
+							{/* <FormGuest /> */}
+						</div>
+					</SplideSlide>
 				</SplideTrack>
 				<div className='splide__arrows'>
 					<button
@@ -199,14 +316,15 @@ export default function WeddingCard({
 				</div>
 			</Splide>
 			<Popup
-				open={!!popupGallery}
+				open={typeof popupGallery === 'number'}
 				closeOnDocumentClick
-				onClose={closePopupGallery}>
+				onClose={closePopupGallery}
+				className='popup-wedding-gallery'>
 				<ImageVN
-					src={`/images/${gallery[popupGallery - 1]?.src}`}
-					alt={gallery[popupGallery - 1]?.caption}
+					src={`/images/${gallery[popupGallery]?.src}`}
+					alt={gallery[popupGallery]?.caption}
 				/>
-				<figcaption>{gallery[popupGallery - 1]?.caption}</figcaption>
+				<figcaption>{gallery[popupGallery]?.caption}</figcaption>
 			</Popup>
 		</div>
 	);

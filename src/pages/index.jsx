@@ -7,7 +7,16 @@ import SiteBanner from '@layouts/SiteBanner';
 import WeddingCard from '@layouts/WeddingCard';
 import styles from '@styles/Vndangan.module.css';
 
-export default function Home({ navigation, intro, agenda, identity, gallery, name }) {
+export default function Home({
+	navigation,
+	intro,
+	agenda,
+	identity,
+	gallery,
+	loveStories,
+	brideGroom,
+	name,
+}) {
 	const dataSite = useSiteContext();
 
 	return (
@@ -18,9 +27,22 @@ export default function Home({ navigation, intro, agenda, identity, gallery, nam
 			<SiteNav navigation={navigation} />
 			<main className={`site-main ${styles.site_main_vndangan}`}>
 				{!dataSite?.visitorAgent?.isMobile ? (
-					<SiteBanner intro={intro} agenda={agenda} gallery={gallery} className={styles.site_banner} />
+					<SiteBanner
+						intro={intro}
+						agenda={agenda}
+						gallery={gallery}
+						className={styles.site_banner}
+					/>
 				) : null}
-				<WeddingCard name={name} identity={identity} agenda={agenda} gallery={gallery} className={styles.site_wedding} />
+				<WeddingCard
+					name={name}
+					identity={identity}
+					agenda={agenda}
+					gallery={gallery}
+					loveStories={loveStories}
+					brideGroom={brideGroom}
+					className={styles.site_wedding}
+				/>
 			</main>
 		</>
 	);
@@ -95,6 +117,30 @@ export async function getServerSideProps({ req, res, query }) {
 		responseIdentify = error;
 	}
 
+	let responseLoveStories = [];
+
+	try {
+		const getResLoveStories = await queryRest({
+			url: `${HOST_URL}/api/love-stories`,
+		});
+
+		responseLoveStories = getResLoveStories?.response || [];
+	} catch (error) {
+		responseLoveStories = error;
+	}
+
+	let responseBrideGroom = [];
+
+	try {
+		const getResBrideGroom = await queryRest({
+			url: `${HOST_URL}/api/bridegroom`,
+		});
+
+		responseBrideGroom = getResBrideGroom?.response || [];
+	} catch (error) {
+		responseBrideGroom = error;
+	}
+
 	return {
 		props: {
 			navigation: resposeNavigation,
@@ -102,7 +148,9 @@ export async function getServerSideProps({ req, res, query }) {
 			agenda: responseAgenda,
 			identity: responseIdentify,
 			gallery: responseGallery,
-			name: name || 'Anda & Sekeluarga'
+			loveStories: responseLoveStories,
+			brideGroom: responseBrideGroom,
+			name: name || 'Anda & Sekeluarga',
 		},
 	};
 }

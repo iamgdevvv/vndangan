@@ -79,11 +79,29 @@ const escapeHtml = (html) => {
 	return html.replace(/<(.|\n)*?>/g, '');
 };
 
+const printDate = (date = '') => {
+	const getPrintDate = new Date(date) || new Date();
+
+	return `${number2digits(getPrintDate.getDate())} ${nameMonthbyDate(
+		getPrintDate
+	)} ${getPrintDate.getFullYear()}`;
+};
+
+const printTime = (date = '') => {
+	const getPrintTime = new Date(date) || new Date();
+
+	return `${number2digits(getPrintTime.getHours())} : ${number2digits(
+		getPrintTime.getMinutes()
+	)}`;
+};
+
 export {
 	faviconAssets,
 	userAgentDevices,
 	nameMonthbyDate,
 	number2digits,
 	stringCapitalize,
-	escapeHtml
+	escapeHtml,
+	printDate,
+	printTime
 };
