@@ -98,11 +98,11 @@
 			@apply relative z-3;
 		}
 
-		a[class*='cta_action_agenda__calendar'] {
+		[class*='cta_action_agenda__calendar'] {
 			@apply absolute top-0 left-0 w-full h-full z-2 bg-transparent items-start justify-end text-0px;
 		}
 
-		a[class*='cta_action_agenda__map'] {
+		[class*='cta_action_agenda__map'] {
 			@apply hidden;
 		}
 	}

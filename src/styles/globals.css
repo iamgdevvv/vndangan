@@ -71,7 +71,8 @@
 *,
 *:before,
 *:after {
-	@apply  !outline-transparent;
+	@apply  !outline-none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	--tw-shadow-colored: 0 0 16px 0 var(--tw-shadow-color) !important;
 }
 
@@ -85,6 +86,14 @@
 
 body {
 	@apply overscroll-y-none text-16px leading-relaxed text-zinc-900;
+}
+
+::-webkit-scrollbar {
+	@apply w-8px h-8px bg-gray-400/60;
+}
+
+::-webkit-scrollbar-thumb {
+	@apply w-8px h-8px bg-teal-500 rounded-8px;
 }
 
 a,
@@ -112,6 +121,21 @@ img {
 	}
 }
 
+ul,
+ol {
+
+	ul,
+	ol {
+		@apply mt-10px;
+	}
+}
+
+li {
+	&+li {
+		@apply mt-10px;
+	}
+}
+
 h1,
 h2,
 h3,
@@ -133,12 +157,29 @@ h6 {
 	@apply mb-16px;
 }
 
-.popup-overlay.popup-wedding-gallery-overlay {
-	@apply cursor-pointer;
+input,
+select,
+textarea {
+	@apply text-16px leading-normal caret-zinc-900 w-full border border-zinc-300 py-10px px-20px rounded-4px transition;
+
+	&[aria-invalid='true'] {
+		@apply border-rose-400;
+	}
+
+	&[disabled] {
+		@apply text-zinc-400 bg-zinc-100 pointer-events-none;
+	}
 }
 
-.popup-content.popup-wedding-gallery-content {
-	@apply max-w-800px w-[calc(100%-40px)] max-h-[calc(100%-40px)] p-20px rounded-8px cursor-default;
+textarea {
+	@apply min-h-100px resize-none;
+}
+
+.popup-content.popup-content {
+	@apply border-0 bg-transparent;
+}
+
+.popup-gallery-content .popup-gallery {
 
 	.figure-image {
 		@apply w-full h-full overflow-hidden;
@@ -155,5 +196,21 @@ h6 {
 
 	figcaption {
 		@apply w-full mt-20px text-center;
+	}
+}
+
+.popup-map-content .popup-map {
+	@apply pb-0 px-0 items-stretch;
+
+	&>[class*='popupx-inner'] {
+		@apply max-w-full w-screen rounded-b-0px;
+	}
+
+	[class*='popupx-main'] {
+		@apply w-full h-full;
+	}
+
+	iframe {
+		@apply w-full h-full bg-gray-200 rounded-8px overflow-hidden;
 	}
 }

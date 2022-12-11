@@ -1,0 +1,43 @@
+.bridegroom_wrapper {
+	@apply flex items-start justify-between flex-wrap -mx-10px;
+	@apply @xl: (px-20px);
+
+	.item_bridegroom {
+		@apply px-10px;
+		@apply md:(w-1/2);
+		@apply <md:(w-full);
+
+		&+.item_bridegroom {
+			@apply mt-28px;
+		}
+	}
+
+	.title_bridegroom {
+		@apply text-32px leading-tight capitalize mb-20px;
+	}
+}
+
+.lists_bridegroom {
+	@apply w-full;
+
+	li {
+		@apply flexs;
+		@apply not-last: (mb-10px);
+	}
+
+	.thumb_bridegroom {
+		@apply w-68px;
+
+		[class~='image-wrapper'] {
+			@apply aspect-square;
+		}
+
+		img {
+			@apply w-full h-full rounded-full;
+		}
+	}
+
+	.name_bridegroom {
+		@apply text-18px leading-relaxed font-semibold w-[calc(100%-68px)] pl-20px;
+	}
+}

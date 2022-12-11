@@ -1,0 +1,50 @@
+.field_rows {
+	@apply mb-10px -mx-5px flexs justify-between;
+
+	.field_col {
+		@apply w-1/2 px-5px;
+	}
+
+	.field_col_provider {
+		@apply w-140px self-stretch flex items-stretch;
+
+		&>[class*='container'] {
+			@apply w-full flex items-stretch;
+
+			&>[class*='control'] {
+				@apply w-full;
+			}
+
+			&>[class*='menu'] {
+
+				.icon_provider {
+					@apply max-w-full w-full h-28px max-h-full object-contain p-4px bg-white rounded-4px;
+				}
+			}
+		}
+	}
+
+	.field_col_nominal {
+		@apply w-[calc(100%-140px)];
+	}
+}
+
+.field_input {
+	@apply w-full mb-10px;
+}
+
+.message_error {
+	@apply text-14px leading-relaxed text-red-400;
+}
+
+.field_submit {
+	@apply flexs justify-end w-full mt-20px;
+
+	.cta_field_sumbit {
+		@apply cta-primary;
+
+		svg {
+			@apply w-20px h-20px ml-10px;
+		}
+	}
+}

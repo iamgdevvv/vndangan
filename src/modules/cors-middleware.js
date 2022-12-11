@@ -1,7 +1,7 @@
 import Cors from 'cors';
 
 export default function CorsMiddleware(req, res, rules = {}) {
-	const whitelist = ['http://localhost:3000', 'https://vndangan.com'];
+	const whitelist = ['http://localhost:3000', 'https://grafismutia.my.id'];
 	const corsOptions = {
 		origin: function (origin, callback) {
 			if (whitelist.indexOf(origin) !== -1) {

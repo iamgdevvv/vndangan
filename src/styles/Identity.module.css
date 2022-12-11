@@ -1,0 +1,65 @@
+
+
+.photo_wedding_identity {
+	@apply w-full flexs-center mb-auto;
+
+	[class~='image-wrapper'] {
+		@apply relative aspect-square;
+		@apply @xl:(w-176px);
+		@apply 2xl:(w-240px);
+		@apply <xl:(w-160px);
+		@apply after: (_content absolute top-0 left-0 z-2 w-full h-full bg-contain bg-no-repeat);
+
+		&:after {
+			background-image: url('/images/love-mask.png');
+		}
+	}
+
+	img {
+		@apply block w-full h-full;
+	}
+}
+
+.brides_wedding_identity {
+	@apply mt-10px;
+
+	&+.brides_wedding_identity {
+		@apply mt-20px;
+	}
+
+	span {
+		@apply block;
+	}
+
+	.brides_identity_sublabel {
+		@apply text-12px text-zinc-500 leading-relaxed uppercase mb-6px;
+	}
+
+	.brides_identity_name {
+		@apply text-20px font-semibold leading-relaxed capitalize mb-6px;
+	}
+}
+
+.brides_wedding_invitation {
+	@apply mt-40px;
+
+	span {
+		@apply block;
+	}
+
+	.brides_invitation_sublabel {
+		@apply text-14px leading-relaxed mb-6px;
+	}
+
+	.brides_invitation_name {
+		@apply text-28px font-bold leading-relaxed mb-10px;
+	}
+
+	.brides_invitation_info {
+		@apply text-10px text-zinc-600 leading-relaxed;
+
+		.brides_invitation_info_mark {
+			@apply inline text-rose-500;
+		}
+	}
+}

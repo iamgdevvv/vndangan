@@ -1,0 +1,26 @@
+.photo_guide {
+    @apply w-full mb-20px;
+
+    [class~='image-wrapper'] {
+        @apply max-w-full w-280px aspect-square mx-auto;
+    }
+
+    img {
+        @apply w-full h-full rounded-full;
+    }
+}
+
+.lists_guide {
+    @apply w-full mt-auto;
+
+    li {
+        @apply pl-36px bg-no-repeat bg-left-top;
+        background-size: 20px;
+        background-position-y: 2px;
+        background-image: url('/images/icon-protocol-green.svg');
+    }
+}
+
+.title_guide {
+    @apply text-32px leading-tight;
+}

@@ -4,7 +4,7 @@ import { isObject, isArray } from 'validate.js';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import ImageVN from '@components/ImageVN';
-import Agenda from '@components/Agenda';
+import Agenda from '@components/Vndangan/Agenda';
 import styles from '@styles/SiteBanner.module.css';
 
 export default function SiteBanner({

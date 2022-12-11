@@ -28,6 +28,10 @@ export default function VndanganApp({
 					name='description'
 					content='Sebar undangan untuk sebar kabar bahagia'
 				/>
+				<meta
+					name='robots'
+					content='noindex, nofollow'
+				/>
 				{dataFavicons.map((favicon) => {
 					return (
 						<link

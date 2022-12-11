@@ -1,5 +1,7 @@
 .navbar_vndangan {
-	@apply fixed bottom-20px left-1/2 z-10 px-10px transform-gpu -translate-x-1/2 shadow shadow-zinc-200 bg-white/94 rounded-12px;
+	@apply fixed left-1/2 z-10 px-10px transform-gpu -translate-x-1/2 shadow shadow-zinc-200 bg-white/94 rounded-12px;
+	@apply md:(bottom-20px);
+	@apply <md:(bottom-0 rounded-b-0px);
 }
 
 .nav_lists_vndangan {

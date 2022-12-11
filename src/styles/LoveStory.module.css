@@ -1,0 +1,39 @@
+.title_love_stories {
+    @apply text-32px leading-tight mb-20px;
+}
+
+.love_stories {
+    @apply flex flex-col;
+
+    li {
+        @apply flexs;
+        @apply not-last: (mb-10px);
+        @apply even: (flex-row-reverse);
+
+        &:nth-child(even) {
+            .desc_love_story {
+                @apply text-right pr-20px pl-0;
+            }
+        }
+    }
+
+    .thumb_love_story {
+        @apply w-80px;
+
+        [class~='image-wrapper'] {
+            @apply aspect-square;
+        }
+
+        img {
+            @apply w-full h-full rounded-8px;
+        }
+    }
+
+    .desc_love_story {
+        @apply w-[calc(100%-80px)] pl-20px text-14px leading-relaxed;
+    }
+
+    .date_love_story {
+        @apply block font-semibold mb-4px;
+    }
+}

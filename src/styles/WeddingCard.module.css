@@ -15,10 +15,12 @@
 			@apply h-full;
 
 			&>[class~='splide__slide'] {
+				@apply max-h-0px;
 				@apply before: (_content absolute top-0 right-0 z-2 w-full h-full bg-white rounded-20px opacity-0 transform-gpu translate-x-0 translate-y-0 transition);
 				@apply after: (_content absolute top-0 right-0 z-1 w-full h-full bg-white rounded-20px opacity-0 transform-gpu translate-x-10px translate-y-10px transition);
 
 				&[class~='is-active'] {
+					@apply max-h-none;
 					@apply before: (opacity-80 translate-x-10px translate-y-10px);
 					@apply after: (opacity-60 translate-x-20px translate-y-20px);
 
@@ -92,193 +94,30 @@
 	.title_wedding_card {
 		@apply text-center font-bold;
 		@apply 2xl: (text-48px);
-		@apply xl: (text-42px mb-28px);
-		@apply <xl: (text-36px mb-20px);
+		@apply xl: (text-36px mb-28px);
+		@apply <xl: (text-32px mb-20px);
 	}
 }
 
-.photo_wedding_identity {
-	@apply w-full flexs-center mb-auto;
+.caption_guess_book {
+	@apply flexs text-16px leading-relaxed font-semibold;
+	@apply <md:(flex-col items-start);
 
-	[class~='image-wrapper'] {
-		@apply relative w-160px h-160px;
-		@apply after: (_content absolute top-0 left-0 z-2 w-full h-full bg-contain bg-no-repeat);
+	.donate_guess_book {
+		@apply flexs py-4px px-10px text-14px leading-relaxed bg-teal-100 rounded-4px;
+		@apply md:(ml-10px);
+		@apply <md:(mt-4px);
 
-		&:after {
-			background-image: url('/images/love-mask.png');
-		}
-	}
-
-	img {
-		@apply block w-full h-full;
-	}
-}
-
-.brides_wedding_identity {
-
-	&+.brides_wedding_identity {
-		@apply mt-20px;
-	}
-
-	span {
-		@apply block;
-	}
-
-	.brides_identity_sublabel {
-		@apply text-12px text-zinc-500 leading-relaxed uppercase mb-6px;
-	}
-
-	.brides_identity_name {
-		@apply text-20px font-semibold leading-relaxed capitalize mb-6px;
-	}
-}
-
-.brides_wedding_invitation {
-	@apply mt-40px;
-
-	span {
-		@apply block;
-	}
-
-	.brides_invitation_sublabel {
-		@apply text-14px leading-relaxed mb-6px;
-	}
-
-	.brides_invitation_name {
-		@apply text-28px font-bold leading-relaxed mb-10px;
-	}
-
-	.brides_invitation_info {
-		@apply text-10px text-zinc-600 leading-relaxed;
-
-		.brides_invitation_info_mark {
-			@apply inline text-rose-500;
-		}
-	}
-}
-
-.gallery_wedding {
-	@apply mb-40px;
-	@apply 2xl: (-mx-40px);
-	@apply <2xl: (-mx-20px);
-
-	[class~='splide__track'] {
-		@apply 2xl: ( !pl-40px !pr-[20%]);
-		@apply <2xl: ( !pl-20px !pr-[20%]);
-	}
-
-	[class~='splide__slide'] {
-		@apply cursor-pointer opacity-100 transition;
-
-		&:not([class~='is-active']) {
-			@apply opacity-80;
+		[class~='figure-image'] {
+			@apply mr-10px;
 		}
 
-		&[class~='is-prev'] {
-			@apply opacity-20;
-		}
-	}
+		.icon_donate {
+			@apply w-auto;
 
-	[class~='splide__pagination'] {
-		@apply absolute top-10px bottom-auto left-auto right-10px w-auto inline-flex flex-col p-0;
-
-		li {
-			@apply flex;
-			@apply not-last: (mb-6px);
-		}
-
-		[class~='splide__pagination__page'] {
-			@apply w-10px h-10px m-0 bg-teal-400 opacity-40;
-
-			&[class~='is-active'] {
-				@apply opacity-100;
+			img {
+				@apply w-auto h-16px rounded-0px;
 			}
 		}
-	}
-
-	.image_gallery_wedding {
-		@apply w-full h-300px object-cover rounded-12px;
-	}
-
-	figcaption {
-		@apply text-14px leading-relaxed mt-10px opacity-100 transition;
-	}
-}
-
-.title_love_stories {
-	@apply text-32px leading-tight mb-20px;
-}
-
-.love_stories {
-	@apply flex flex-col;
-
-	li {
-		@apply flexs;
-		@apply not-last: (mb-10px);
-		@apply even: (flex-row-reverse);
-
-		&:nth-child(even) {
-			.desc_love_story {
-				@apply text-right pr-20px pl-0;
-			}
-		}
-	}
-
-	.thumb_love_story {
-		@apply w-80px;
-
-		[class~='image-wrapper'] {
-			@apply aspect-square;
-		}
-
-		img {
-			@apply w-full h-full rounded-8px;
-		}
-	}
-
-	.desc_love_story {
-		@apply w-[calc(100%-80px)] pl-20px text-14px leading-relaxed;
-	}
-
-	.date_love_story {
-		@apply block font-semibold mb-4px;
-	}
-}
-
-.bridegroom_wrapper {
-	@apply flex items-start justify-between -mx-10px;
-	@apply @xl: (px-20px);
-
-	.item_bridegroom {
-		@apply px-10px;
-	}
-
-	.title_bridegroom {
-		@apply text-32px leading-tight capitalize mb-20px;
-	}
-}
-
-.lists_bridegroom {
-	@apply w-full;
-
-	li {
-		@apply flexs;
-		@apply not-last: (mb-10px);
-	}
-
-	.thumb_bridegroom {
-		@apply w-68px;
-
-		[class~='image-wrapper'] {
-			@apply aspect-square;
-		}
-
-		img {
-			@apply w-full h-full rounded-full;
-		}
-	}
-
-	.name_bridegroom {
-		@apply text-18px leading-relaxed font-semibold w-[calc(100%-68px)] pl-20px;
 	}
 }

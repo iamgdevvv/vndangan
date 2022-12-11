@@ -15,6 +15,8 @@ export default function Home({
 	gallery,
 	loveStories,
 	brideGroom,
+	guessBook,
+	guide,
 	name,
 }) {
 	const dataSite = useSiteContext();
@@ -41,9 +43,16 @@ export default function Home({
 					gallery={gallery}
 					loveStories={loveStories}
 					brideGroom={brideGroom}
+					guessBook={guessBook}
+					guide={guide}
 					className={styles.site_wedding}
 				/>
 			</main>
+			<style global jsx>{`
+				[class*='navbar_vndangan'] + .site-main {
+					@apply pb-78px;
+				}
+			`}</style>
 		</>
 	);
 }
@@ -141,6 +150,30 @@ export async function getServerSideProps({ req, res, query }) {
 		responseBrideGroom = error;
 	}
 
+	let responseGuessBook = [];
+
+	try {
+		const getResGuessBook = await queryRest({
+			url: `${HOST_URL}/api/guess-book`,
+		});
+
+		responseGuessBook = getResGuessBook?.response || [];
+	} catch (error) {
+		responseGuessBook = error;
+	}
+
+	let responseGuide = [];
+
+	try {
+		const getResGuide = await queryRest({
+			url: `${HOST_URL}/api/guide`,
+		});
+
+		responseGuide = getResGuide?.response || [];
+	} catch (error) {
+		responseGuide = error;
+	}
+
 	return {
 		props: {
 			navigation: resposeNavigation,
@@ -150,6 +183,8 @@ export async function getServerSideProps({ req, res, query }) {
 			gallery: responseGallery,
 			loveStories: responseLoveStories,
 			brideGroom: responseBrideGroom,
+			guessBook: responseGuessBook,
+			guide: responseGuide,
 			name: name || 'Anda & Sekeluarga',
 		},
 	};

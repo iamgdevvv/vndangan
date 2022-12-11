@@ -5,15 +5,13 @@
 		@apply fixed top-0;
 		@apply 2xl: (w-[calc(100%-780px)]);
 		@apply <2xl: (w-[calc(100%-660px)]);
-		@apply <xl: (w-1/2);
-		@apply <md: (hidden);
+		@apply <xl: (hidden);
 	}
 
 	.site_wedding {
 		@apply ml-auto;
 		@apply 2xl: (w-780px);
 		@apply <2xl: (w-660px);
-		@apply <xl: (w-1/2);
-		@apply <md: (w-full);
+		@apply <xl: (w-full);
 	}
 }

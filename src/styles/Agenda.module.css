@@ -39,7 +39,7 @@
 
 	.cta_action_agenda {
 		@apply lg: (not-last:(mr-10px));
-		@apply <lg: (w-full not-last:(mb-10px));
+		@apply <lg: (not-last:(mb-10px));
 
 		svg {
 			@apply text-28px pt-2px ml-10px;

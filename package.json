@@ -26,8 +26,10 @@
 		"react": "^18.2.0",
 		"react-date-picker": "^9.0.0",
 		"react-dom": "^18.2.0",
+		"react-google-recaptcha": "^2.1.0",
 		"react-hook-form": "^7.38.0",
 		"react-icons": "^4.6.0",
+		"react-select": "^5.7.0",
 		"reactjs-popup": "^2.0.5",
 		"validate.js": "^0.13.1",
 		"xss": "^1.0.14"

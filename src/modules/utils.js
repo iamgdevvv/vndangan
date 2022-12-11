@@ -95,6 +95,24 @@ const printTime = (date = '') => {
 	)}`;
 };
 
+const isNumeric = (str) => {
+	return (
+		!isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+		!isNaN(parseFloat(str))
+	); // ...and ensure strings of whitespace fail
+};
+
+const printCurrency = (nominal = 0, locale = 'id-ID', currency = 'IDR') => {
+	if (!isNumeric(nominal)) {
+		return;
+	}
+
+	return Number(nominal).toLocaleString(locale, {
+		style: 'currency',
+		currency,
+	});
+};
+
 export {
 	faviconAssets,
 	userAgentDevices,
@@ -103,5 +121,7 @@ export {
 	stringCapitalize,
 	escapeHtml,
 	printDate,
-	printTime
+	printTime,
+	isNumeric,
+	printCurrency
 };

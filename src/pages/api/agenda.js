@@ -14,7 +14,6 @@ export default async function handler(req, res) {
 			address: 'Jl. Maredan, Perawang Bar., Kec. Tualang',
 			district: 'Siak',
 			province: 'Riau',
-			isDateRange: true,
 		},
 		{
 			id: 2,
@@ -27,8 +26,7 @@ export default async function handler(req, res) {
 			maploc: {
 				lat: 0.660639,
 				long: 101.580859
-			},
-			isDateRange: false,
+			}
 		}
 	]);
 }

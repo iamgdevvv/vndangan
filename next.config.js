@@ -16,6 +16,10 @@ const nextConfig = {
 	},
 	reactStrictMode: true,
 	swcMinify: true,
+	env: {
+		HOST_URL: process.env.HOST_URL,
+		RECAPTCHA_SK: process.env.RECAPTCHA_SK,
+	},
 };
 
 module.exports = nextConfig;

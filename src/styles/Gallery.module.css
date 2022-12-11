@@ -1,0 +1,68 @@
+.gallery_wedding {
+	@apply mb-40px;
+	@apply 2xl: (-mx-40px);
+	@apply <2xl: (-mx-20px);
+
+	[class~='splide__track'][class~='splide__track'] {
+		@apply 2xl: ( !pl-40px !pr-[20%]);
+		@apply <2xl: ( !pl-20px !pr-[20%]);
+	}
+
+	[class~='splide__slide'][class~='splide__slide'] {
+		@apply cursor-pointer opacity-100 transition;
+
+		&:not([class~='is-active']) {
+			@apply opacity-80;
+		}
+
+		&[class~='is-prev'] {
+			@apply opacity-20;
+		}
+	}
+
+	[class~='splide__pagination'][class~='splide__pagination'] {
+		@apply absolute top-10px bottom-auto left-auto right-10px w-auto inline-flex flex-col p-0;
+
+		li {
+			@apply flex;
+			@apply not-last: (mb-6px);
+		}
+
+		[class~='splide__pagination__page'] {
+			@apply w-10px h-10px m-0 bg-teal-400 opacity-40;
+
+			&[class~='is-active'] {
+				@apply opacity-100;
+			}
+		}
+	}
+
+	.gallery_wedding_item {
+		@apply relative w-full overflow-hidden;
+	}
+
+	.image_gallery_wedding {
+		@apply w-full object-cover rounded-12px;
+		@apply md: (h-300px);
+		@apply <md: (h-200px);
+	}
+
+	.desc_gallery_wedding {
+		@apply absolute top-0 left-0 flexs w-full text-white bg-zinc-900/80 rounded-12px pointer-events-none overflow-hidden;
+		@apply md: (h-300px p-20px);
+		@apply <md: (h-200px p-10px text-14px leading-relaxed);
+
+		&:before {
+			@apply _content absolute -top-10px -right-10px z-1 w-134px h-100px opacity-20;
+			background-image: url(/images/icon-quote-white.svg);
+		}
+
+		.desc_inner {
+			@apply line-clamp-6;
+		}
+	}
+
+	figcaption {
+		@apply text-14px leading-relaxed mt-10px opacity-100 transition;
+	}
+}

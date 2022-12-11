@@ -1,0 +1,12 @@
+[
+	{
+		"value": "bca",
+		"label": "Bank Central Asia",
+		"icon": "/images/icon-donate-bca.svg"
+	},
+	{
+		"value": "bri",
+		"label": "Bank Rakyat Indonesia",
+		"icon": "/images/icon-donate-bri.svg"
+	}
+]
