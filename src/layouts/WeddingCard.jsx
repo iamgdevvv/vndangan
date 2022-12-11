@@ -40,7 +40,7 @@ export default function WeddingCard({
 	const dataGuessBook = useMemo(() => {
 		const data = [];
 
-		for (let guess of guessBook) {
+		guessBook.map((guess) => {
 			data.push({
 				src: guess.image,
 				caption: (
@@ -60,7 +60,7 @@ export default function WeddingCard({
 				),
 				desc: guess.desc,
 			});
-		}
+		});
 
 		return data;
 	}, [guessBook]);

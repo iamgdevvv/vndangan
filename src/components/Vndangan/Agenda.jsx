@@ -176,8 +176,9 @@ export default function Agenda({
 				closeHandler={() => setPopupMap(false)}
 				className='popup-map'>
 				<iframe
+					title={`Agenda ${titleAgenda}`}
 					frameborder='0'
-					src={urlAddress}></iframe>
+					src={urlAddress} />
 			</PopupX>
 		</>
 	);

@@ -32,6 +32,19 @@ export default function FormGuest() {
 		return dataProvider.find((item) => item.value === 'bca');
 	}, [dataProvider]);
 
+	const getOptionLabel = useCallback((option) => {
+		if (option?.icon) {
+			return (
+				<ImageVN
+					className={styles.icon_provider}
+					src={option.icon}
+				/>
+			);
+		}
+
+		return option.label;
+	}, []);
+
 	const onSubmit = useCallback((data) => {
 		console.log(data);
 	}, []);
@@ -67,18 +80,7 @@ export default function FormGuest() {
 								options={optionsProvider}
 								defaultValue={selectedProvider}
 								onChange={(option) => onChange(option.value)}
-								getOptionLabel={(option) => {
-									if (option?.icon) {
-										return (
-											<ImageVN
-												className={styles.icon_provider}
-												src={option.icon}
-											/>
-										);
-									}
-
-									return option.label;
-								}}
+								getOptionLabel={getOptionLabel}
 							/>
 						)}
 					/>

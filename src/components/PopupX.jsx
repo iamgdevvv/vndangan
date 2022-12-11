@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import styles from '@styles/PopupX.module.css';
+import { isFunction } from 'validate.js';
+import { useCallback } from 'react';
 
 function PopupX({
 	open,
@@ -13,15 +15,19 @@ function PopupX({
 }) {
 	const [isClosing, setIsClosing] = useState(false);
 
-	const handlerClose = () => {
+	const handlerClose = useCallback(() => {
 		setIsClosing(true);
-		if (typeof closeHandler === 'function') {
-			setTimeout(function () {
+		if (isFunction(closeHandler)) {
+			const delayClose = setTimeout(function () {
 				closeHandler();
 				setIsClosing(false);
 			}, 300);
+
+			return () => {
+				clearInterval(delayClose);
+			};
 		}
-	};
+	}, []);
 
 	return (
 		<Popup
@@ -37,6 +43,7 @@ function PopupX({
 					<header className={styles['popupx-header']}>
 						{slotHeader}
 						<button
+							type='button'
 							className={styles['close-popupx']}
 							onClick={handlerClose}>
 							<IoCloseCircleOutline />
@@ -52,6 +59,7 @@ function PopupX({
 				<div
 					className={styles['popupx-overlay']}
 					onClick={handlerClose}
+					aria-hidden='true'
 				/>
 			</div>
 		</Popup>

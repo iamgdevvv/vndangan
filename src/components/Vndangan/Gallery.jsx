@@ -49,7 +49,7 @@ export default function Gallery({ data }) {
 								</div>
 							) : null}
 							{itemGallery?.caption ? (
-								<figcaption onClick={() => setPopupGallery(index)}>
+								<figcaption aria-hidden='true' onClick={() => setPopupGallery(index)}>
 									{itemGallery.caption}
 								</figcaption>
 							) : null}
