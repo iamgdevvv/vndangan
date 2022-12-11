@@ -50,7 +50,7 @@ export default function Home({
 			</main>
 			<style global jsx>{`
 				[class*='navbar_vndangan'] + .site-main {
-					@apply pb-78px;
+					@apply <xl:pb-78px;
 				}
 			`}</style>
 		</>
