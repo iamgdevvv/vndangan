@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { isArray, isEmpty } from 'validate.js';
+import { isArray, isDefined, isEmpty } from 'validate.js';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import ImageVN from '@components/ImageVN';
@@ -28,11 +28,11 @@ export default function WeddingCard({
 		return {
 			type: 'fade',
 			rewind: true,
-			drag: false,
+			drag: true,
 			autoplay: false,
 			interval: 3000,
 			arrows: true,
-			pagination: false,
+			pagination: true,
 			autoHeight: true,
 		};
 	}, []);
@@ -66,14 +66,34 @@ export default function WeddingCard({
 	}, [guessBook]);
 
 	return (
-		<div className={`${styles.wedding_card_wrapper} ${className}`}>
+		<div
+			id='wedding-card'
+			className={`${styles.wedding_card_wrapper} ${className}`}>
 			<Splide
 				hasTrack={false}
 				options={confWeddingSplide}
-				className={styles.wedding_cards}>
+				className={styles.wedding_cards}
+				onActive={(e) => {
+					if (isDefined(document)) {
+						if (document.getElementById('navbar-vndangan')) {
+							document
+								.querySelector(
+									'#navbar-vndangan .nav_item_active'
+								)
+								.classList.remove('nav_item_active');
+							document
+								.querySelector(
+									`#navbar-vndangan .nav_item:nth-child(${
+										e.index + 1
+									})`
+								)
+								.classList.add('nav_item_active');
+						}
+					}
+				}}>
 				<SplideTrack>
 					{!isEmpty(identity) ? (
-						<SplideSlide>
+						<SplideSlide className='identity'>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
 									Undangan Pernikahan
@@ -139,7 +159,7 @@ export default function WeddingCard({
 									Buku Tamu & Tanda Kasih
 								</h2>
 								<Gallery data={dataGuessBook} />
-								<FormGuest />
+								<FormGuest title='Pesan Tanda Kasih' />
 							</div>
 						</SplideSlide>
 					) : null}

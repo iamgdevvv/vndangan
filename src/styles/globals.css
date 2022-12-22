@@ -85,16 +85,30 @@
 }
 
 body {
-	@apply overscroll-y-none text-16px leading-relaxed text-zinc-900;
+	@apply overscroll-y-none !leading-relaxed text-zinc-900;
+	@apply md: (text-16px);
+	@apply <md: (text-14px);
 }
 
 ::-webkit-scrollbar {
-	@apply w-8px h-8px bg-gray-400/60;
+	@apply w-8px h-8px bg-teal-50;
 }
 
 ::-webkit-scrollbar-thumb {
-	@apply w-8px h-8px bg-teal-500 rounded-8px;
+	@apply w-8px h-8px bg-teal-400 rounded-8px;
 }
+
+/* @keyframes spin {
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	to {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+} */
 
 a,
 button,
@@ -160,7 +174,9 @@ h6 {
 input,
 select,
 textarea {
-	@apply text-16px leading-normal caret-zinc-900 w-full border border-zinc-300 py-10px px-20px rounded-4px transition;
+	@apply !leading-normal caret-zinc-900 w-full border border-zinc-300 py-10px px-20px rounded-4px transition;
+	@apply md: (text-16px);
+	@apply <md: (text-14px);
 
 	&[aria-invalid='true'] {
 		@apply border-rose-400;
@@ -180,6 +196,11 @@ textarea {
 }
 
 .popup-gallery-content .popup-gallery {
+	@apply <md: (items-end px-0 pb-0);
+
+	&>[class*='popupx-inner'] {
+		@apply <md: (min-h-[96vh] p-10px pt-20px rounded-b-0px);
+	}
 
 	.figure-image {
 		@apply w-full h-full overflow-hidden;
@@ -191,6 +212,7 @@ textarea {
 
 		img {
 			@apply rounded-8px;
+			@apply <md: min-h-60vh;
 		}
 	}
 
@@ -212,5 +234,13 @@ textarea {
 
 	iframe {
 		@apply w-full h-full bg-gray-200 rounded-8px overflow-hidden;
+	}
+}
+
+.popup-invite-content .popup-invite {
+	@apply <md:(items-start px-0 pt-0);
+
+	[class*='popupx-inner'] {
+		@apply rounded-t-0px;
 	}
 }

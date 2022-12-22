@@ -49,6 +49,10 @@
 		}
 	}
 
+	[class~='splide__pagination'] {
+		@apply hidden;
+	}
+
 	.item_wedding_card {
 		@apply relative z-3 w-full h-full flex flex-col bg-white rounded-20px shadow shadow-zinc-200 transform-gpu translate-x-10px translate-y-10px transition overflow-hidden;
 		@apply before: (_content absolute -top-10px -left-10px z-1 w-full h-full bg-transparent bg-no-repeat opacity-30);
@@ -92,21 +96,22 @@
 	}
 
 	.title_wedding_card {
-		@apply text-center font-bold;
+		@apply fsize-lg text-center font-bold;
 		@apply 2xl: (text-48px);
 		@apply xl: (text-36px mb-28px);
-		@apply <xl: (text-32px mb-20px);
+		@apply @xl: (text-32px mb-20px);
 	}
 }
 
 .caption_guess_book {
-	@apply flexs text-16px leading-relaxed font-semibold;
-	@apply <md:(flex-col items-start);
+	@apply flexs !leading-relaxed font-semibold;
+	@apply md: (text-16px);
+	@apply <md: (text-14px flex-col items-start);
 
 	.donate_guess_book {
-		@apply flexs py-4px px-10px text-14px leading-relaxed bg-teal-100 rounded-4px;
-		@apply md:(ml-10px);
-		@apply <md:(mt-4px);
+		@apply flexs py-4px px-10px !leading-relaxed bg-teal-100 rounded-4px;
+		@apply md: (text-14px ml-10px);
+		@apply <md: (text-12px mt-4px);
 
 		[class~='figure-image'] {
 			@apply mr-10px;
@@ -116,7 +121,7 @@
 			@apply w-auto;
 
 			img {
-				@apply w-auto h-16px rounded-0px;
+				@apply w-auto h-16px min-h-0 rounded-0px;
 			}
 		}
 	}

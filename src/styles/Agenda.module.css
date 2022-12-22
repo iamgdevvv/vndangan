@@ -5,7 +5,7 @@
 }
 
 .title_agenda {
-	@apply font-bold text-28px leading-tight capitalize mb-20px;
+	@apply font-bold fsize-md capitalize mb-20px;
 }
 
 .info_agenda {
@@ -42,7 +42,9 @@
 		@apply <lg: (not-last:(mb-10px));
 
 		svg {
-			@apply text-28px pt-2px ml-10px;
+			@apply ml-10px;
+			@apply md: (text-28px pt-2px);
+			@apply <md: (text-24px);
 		}
 	}
 

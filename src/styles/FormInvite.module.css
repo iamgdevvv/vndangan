@@ -1,0 +1,23 @@
+.title_form_invite {
+    @apply fsize-l mb-10px;
+}
+
+.form_invite {
+    @apply relative;
+
+    .field_input {
+        @apply w-full;
+
+        input {
+            @apply pr-48px bg-teal-50;
+        }
+    }
+
+    .field_submit {
+        @apply absolute top-0 right-0 w-40px h-full;
+
+        .cta_field_sumbit {
+            @apply w-full h-full text-24px;
+        }
+    }
+}

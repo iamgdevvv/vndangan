@@ -32,11 +32,15 @@
 	}
 
 	.brides_identity_sublabel {
-		@apply text-12px text-zinc-500 leading-relaxed uppercase mb-6px;
+		@apply text-zinc-500 !leading-relaxed uppercase mb-6px;
+		@apply md:(text-12px);
+		@apply <md:(text-10px);
 	}
 
 	.brides_identity_name {
-		@apply text-20px font-semibold leading-relaxed capitalize mb-6px;
+		@apply font-semibold !leading-relaxed capitalize mb-6px;
+		@apply md:(text-20px);
+		@apply <md:(text-18px);
 	}
 }
 
@@ -48,11 +52,13 @@
 	}
 
 	.brides_invitation_sublabel {
-		@apply text-14px leading-relaxed mb-6px;
+		@apply !leading-relaxed mb-6px;
+		@apply md:(text-14px);
+		@apply <md:(text-12px);
 	}
 
 	.brides_invitation_name {
-		@apply text-28px font-bold leading-relaxed mb-10px;
+		@apply fsize-md font-bold mb-10px;
 	}
 
 	.brides_invitation_info {

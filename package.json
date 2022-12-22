@@ -27,6 +27,7 @@
 		"react-date-picker": "^9.0.0",
 		"react-dom": "^18.2.0",
 		"react-google-recaptcha": "^2.1.0",
+		"react-h5-audio-player": "^3.8.6",
 		"react-hook-form": "^7.38.0",
 		"react-icons": "^4.6.0",
 		"react-select": "^5.7.0",

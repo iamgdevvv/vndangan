@@ -1,5 +1,5 @@
 .title_love_stories {
-    @apply text-32px leading-tight mb-20px;
+    @apply fsize-lg mb-20px;
 }
 
 .love_stories {
@@ -30,7 +30,9 @@
     }
 
     .desc_love_story {
-        @apply w-[calc(100%-80px)] pl-20px text-14px leading-relaxed;
+        @apply w-[calc(100%-80px)] pl-20px !leading-relaxed;
+        @apply md:(text-14px);
+        @apply <md:(text-12px);
     }
 
     .date_love_story {

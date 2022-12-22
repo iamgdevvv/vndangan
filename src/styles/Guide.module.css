@@ -22,5 +22,5 @@
 }
 
 .title_guide {
-    @apply text-32px leading-tight;
+    @apply fsize-lg;
 }

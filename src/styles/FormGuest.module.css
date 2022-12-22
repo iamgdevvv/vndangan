@@ -1,3 +1,7 @@
+.title_form_guest {
+	@apply fsize-lg;
+}
+
 .field_rows {
 	@apply mb-10px -mx-5px flexs justify-between;
 

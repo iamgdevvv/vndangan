@@ -6,8 +6,9 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import dataProvider from '@data/provider-payment.json';
 import ImageVN from '@components/ImageVN';
 import styles from '@styles/FormGuest.module.css';
+import { isEmpty } from 'validate.js';
 
-export default function FormGuest() {
+export default function FormGuest({ title }) {
 	const {
 		control,
 		trigger,
@@ -22,7 +23,7 @@ export default function FormGuest() {
 		return [
 			{
 				value: 'none',
-				label: '-',
+				label: 'Doa',
 			},
 			...dataProvider,
 		];
@@ -50,95 +51,104 @@ export default function FormGuest() {
 	}, []);
 
 	return (
-		<form
-			action='https://submit-form.com/zq8ntdSi'
-			onSubmit={handleSubmit(onSubmit)}>
-			<div
-				className={`${styles.field_input} ${
-					errors?.name ? styles.field_invalid : ''
-				}`}>
-				<input
-					type='text'
-					placeholder='Nama'
-					aria-invalid={Boolean(errors?.name)}
-					{...register('name', { required: true })}
-				/>
-			</div>
-			<div className={`${styles.field_rows} ${styles.field_rows_donate}`}>
+		<>
+			{!isEmpty(title) ? (
+				<h3 className={styles.title_form_guest}>{title}</h3>
+			) : null}
+			<form
+				action='https://submit-form.com/zq8ntdSi'
+				onSubmit={handleSubmit(onSubmit)}>
 				<div
-					className={`${styles.field_col} ${
-						styles.field_col_provider
-					} ${errors?.provider ? styles.field_invalid : ''}`}>
-					<Controller
-						control={control}
-						name='provider'
-						defaultValue='bca'
-						rules={{ required: true }}
-						render={({ field: { onChange, ref } }) => (
-							<Select
-								inputRef={ref}
-								options={optionsProvider}
-								defaultValue={selectedProvider}
-								onChange={(option) => onChange(option.value)}
-								getOptionLabel={getOptionLabel}
-							/>
-						)}
-					/>
-				</div>
-				<div
-					className={`${styles.field_col} ${
-						styles.field_col_nominal
-					} ${errors?.nominal ? styles.field_invalid : ''}`}>
+					className={`${styles.field_input} ${
+						errors?.name ? styles.field_invalid : ''
+					}`}>
 					<input
-						type='number'
-						name='nominal'
-						placeholder='IDR'
-						defaultValue={10000}
-						disabled={watch('provider') === 'none'}
-						aria-invalid={Boolean(errors?.nominal)}
-						{...register('nominal', { required: true })}
+						type='text'
+						placeholder='Nama'
+						aria-invalid={Boolean(errors?.name)}
+						{...register('name', { required: true })}
 					/>
 				</div>
-			</div>
-			<div
-				className={`${styles.field_input} ${
-					errors?.message ? styles.field_invalid : ''
-				}`}>
-				<textarea
-					placeholder='Pesan tanda kasih'
-					aria-invalid={Boolean(errors?.message)}
-					{...register('message', { required: true })}
-				/>
-			</div>
-			<div
-				className={`${styles.field_input} ${
-					errors?.recaptcha ? styles.field_invalid : ''
-				}`}>
-				<input
-					type='hidden'
-					{...register('recaptcha', { required: true })}
-				/>
-				<ReCAPTCHA
-					sitekey={process.env.RECAPTCHA_SK}
-					onChange={async (val) => {
-						setValue('recaptcha', val);
-						const triggerRecaptcha = await trigger('recaptcha');
-					}}
-				/>
-				{errors?.recaptcha ? (
-					<span className={styles.message_error}>
-						Selesaikan recaptcha diatas terlebih dulu.
-					</span>
-				) : null}
-			</div>
-			<div className={styles.field_submit}>
-				<button
-					type='submit'
-					className={styles.cta_field_sumbit}>
-					Kirim Tanda Kasih
-					<IoHeartSharp />
-				</button>
-			</div>
-		</form>
+				<div
+					className={`${styles.field_rows} ${styles.field_rows_donate}`}>
+					<div
+						className={`${styles.field_col} ${
+							styles.field_col_provider
+						} ${errors?.provider ? styles.field_invalid : ''}`}>
+						<Controller
+							control={control}
+							name='provider'
+							defaultValue='bca'
+							rules={{ required: true }}
+							render={({ field: { onChange, ref } }) => (
+								<Select
+									instanceId='provider'
+									inputRef={ref}
+									options={optionsProvider}
+									defaultValue={selectedProvider}
+									onChange={(option) =>
+										onChange(option.value)
+									}
+									getOptionLabel={getOptionLabel}
+								/>
+							)}
+						/>
+					</div>
+					<div
+						className={`${styles.field_col} ${
+							styles.field_col_nominal
+						} ${errors?.nominal ? styles.field_invalid : ''}`}>
+						<input
+							type='number'
+							name='nominal'
+							placeholder='IDR'
+							defaultValue={10000}
+							disabled={watch('provider') === 'none'}
+							aria-invalid={Boolean(errors?.nominal)}
+							{...register('nominal', { required: true })}
+						/>
+					</div>
+				</div>
+				<div
+					className={`${styles.field_input} ${
+						errors?.message ? styles.field_invalid : ''
+					}`}>
+					<textarea
+						placeholder='Pesan tanda kasih'
+						aria-invalid={Boolean(errors?.message)}
+						{...register('message', { required: true })}
+					/>
+				</div>
+				<div
+					className={`${styles.field_input} ${
+						errors?.recaptcha ? styles.field_invalid : ''
+					}`}>
+					<input
+						type='hidden'
+						{...register('recaptcha', { required: true })}
+					/>
+					<ReCAPTCHA
+						sitekey={process.env.RECAPTCHA_SK}
+						onChange={async (val) => {
+							setValue('recaptcha', val);
+							const triggerRecaptcha = await trigger('recaptcha');
+						}}
+					/>
+					{errors?.recaptcha ? (
+						<span className={styles.message_error}>
+							Selesaikan recaptcha diatas terlebih dulu.
+						</span>
+					) : null}
+				</div>
+				<div className={styles.field_submit}>
+					<button
+						type='submit'
+						className={styles.cta_field_sumbit}>
+						Kirim Tanda Kasih
+						<IoHeartSharp />
+					</button>
+				</div>
+			</form>
+		</>
 	);
 }

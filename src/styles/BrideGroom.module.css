@@ -8,12 +8,12 @@
 		@apply <md:(w-full);
 
 		&+.item_bridegroom {
-			@apply mt-28px;
+			@apply <md:mt-28px;
 		}
 	}
 
 	.title_bridegroom {
-		@apply text-32px leading-tight capitalize mb-20px;
+		@apply fsize-lg capitalize mb-20px;
 	}
 }
 
@@ -38,6 +38,8 @@
 	}
 
 	.name_bridegroom {
-		@apply text-18px leading-relaxed font-semibold w-[calc(100%-68px)] pl-20px;
+		@apply !leading-relaxed font-semibold w-[calc(100%-68px)] pl-20px;
+		@apply md:(text-18px);
+		@apply <md:(text-16px);
 	}
 }

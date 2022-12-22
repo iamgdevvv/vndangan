@@ -1,21 +1,28 @@
 .navbar_vndangan {
-	@apply fixed left-1/2 z-10 px-10px transform-gpu -translate-x-1/2 shadow shadow-zinc-200 bg-white/94 rounded-12px;
+	@apply fixed left-1/2 z-10 px-10px transform-gpu -translate-x-1/2 translate-y-20px scale-90 shadow shadow-zinc-200 bg-white/96 rounded-12px opacity-0 transition;
 	@apply md:(bottom-20px);
 	@apply <md:(bottom-0 rounded-b-0px);
+
+	&.navbar_active {
+		@apply translate-y-0 scale-100 opacity-100 duration-600;
+	}
 }
 
 .nav_lists_vndangan {
 	@apply flex items-center;
 
+	[class~='nav_item'] {
+		@apply mt-0;
+	}
 
-	.nav_item_active {
-		.nav_link {
+	[class~='nav_item_active'] {
+		.nav_button {
 			@apply text-teal-400;
 		}
 	}
 }
 
-.nav_link {
+.nav_button {
 	@apply w-60px h-68px flex items-center justify-center text-26px text-zinc-500;
 	@apply hover:(text-teal-400);
 }

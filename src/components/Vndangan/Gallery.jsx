@@ -14,9 +14,9 @@ export default function Gallery({ data }) {
 			type: 'slide',
 			perPage: 1,
 			rewind: true,
-			drag: true,
+			drag: false,
 			autoplay: true,
-			interval: 2000000000000000000,
+			interval: 1000,
 			arrows: false,
 			pagination: true,
 			gap: '10px',
@@ -49,7 +49,9 @@ export default function Gallery({ data }) {
 								</div>
 							) : null}
 							{itemGallery?.caption ? (
-								<figcaption aria-hidden='true' onClick={() => setPopupGallery(index)}>
+								<figcaption
+									aria-hidden='true'
+									onClick={() => setPopupGallery(index)}>
 									{itemGallery.caption}
 								</figcaption>
 							) : null}

@@ -1,0 +1,58 @@
+.site_audio {
+	@apply fixed top-0 left-0 z-999 w-full shadow shadow-zinc-200 transform-gpu -translate-y-full transition;
+	@apply md: (p-20px);
+	@apply <md: (p-10px);
+	@apply before: (_content absolute top-0 left-0 z-1 w-full h-full backdrop-filter backdrop-blur-sm backdrop-brightness-120 bg-white/92);
+
+	&.site_audio__active {
+		@apply translate-y-0;
+
+		.cta_audio {
+			@apply translate-y-1/2;
+			--tw-shadow-colored: 0 6px 8px 0 var(--tw-shadow-color) !important;
+		}
+	}
+
+	&>* {
+		@apply relative z-2;
+	}
+
+	[class~='rhap_container'] {
+		@apply shadow-none p-0 bg-transparent;
+
+		[class~='rhap_time'] {
+			@apply text-14px leading-relaxed;
+		}
+
+		[class~='rhap_progress-container'] {
+			@apply mx-20px;
+		}
+
+		[class~='rhap_progress-bar-show-download'] {
+			@apply bg-teal-100;
+		}
+
+		[class~='rhap_progress-filled'] {
+			@apply bg-teal-300;
+		}
+
+		[class~='rhap_progress-indicator'] {
+			@apply bg-teal-400 shadow shadow-zinc-200;
+		}
+
+		[class~='rhap_button-clear'] {
+			@apply text-teal-300 transition;
+			@apply hover: text-teal-400;
+		}
+	}
+}
+
+.title_audio {
+	@apply fsize-l text-center mb-10px;
+}
+
+.cta_audio {
+	@apply absolute bottom-0 z-3 text-20px w-48px h-48px rounded-full bg-white transform-gpu translate-y-[calc(100%+10px)] shadow shadow-zinc-200/80 transition;
+	@apply md: (right-20px);
+	@apply <md: (right-10px);
+}

@@ -60,7 +60,7 @@ export default defineConfig({
 		'_content': 'content-a text-0px',
 		'flexs': 'flex flex-row flex-wrap items-center',
 		'flexs-center': 'flexs justify-center',
-		'cta': 'flexs inline-flex text-16px leading-relaxed font-bold text-current px-20px py-12px transition-all',
+		'cta': 'flexs inline-flex font-bold text-current px-20px py-12px transition-all md:(text-16px leading-tight) <md:(text-14px leading-tight)',
 		'cta-primary': 'cta relative text-teal-100 bg-teal-400 rounded-6px hover:(bg-teal-500)',
 		'cta-secondary': 'cta relative text-teal-400 bg-teal-100 rounded-6px hover:(text-teal-500)',
 		'cta-icon':
@@ -68,7 +68,10 @@ export default defineConfig({
 		'cta-iconright':
 			'cta-icon after:ml-12px hover:after:(translate-x-3px) after:order-last',
 		'cta-iconleft':
-			'cta-icon after:mr-12px hover:after:(-translate-x-3px) after:order-first',
+		'cta-icon after:mr-12px hover:after:(-translate-x-3px) after:order-first',
+		'fsize-l': 'md:(text-24px leading-tight) <md:(text-20px leading-tight)',
+		'fsize-md': 'md:(text-28px leading-tight) <md:(text-22px leading-tight)',
+		'fsize-lg': 'md:(text-32px leading-tight) <md:(text-26px leading-tight)'
 	},
 	plugins: [
 		require('windicss/plugin/line-clamp'),

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useSiteContext } from '@contexts/SiteContext';
 import queryRest from '@modules/query-rest';
@@ -6,6 +6,16 @@ import SiteNav from '@layouts/SiteNav';
 import SiteBanner from '@layouts/SiteBanner';
 import WeddingCard from '@layouts/WeddingCard';
 import styles from '@styles/Vndangan.module.css';
+import { useState } from 'react';
+import FormInvite from '@components/Vndangan/FormInvite';
+
+const SiteAudioDynamic = dynamic(() => import('@layouts/SiteAudio'), {
+	ssr: false,
+});
+
+const PopupInviteDynamic = dynamic(() => import('@components/PopupX'), {
+	ssr: false,
+});
 
 export default function Home({
 	navigation,
@@ -20,24 +30,29 @@ export default function Home({
 	name,
 }) {
 	const dataSite = useSiteContext();
+	const [nameInvite, setNameInvite] = useState(name);
+	const [togglePopupInvite, setTogglePopupInvite] = useState(true);
 
 	return (
 		<>
 			<Head>
-				<title>Grafis Mutia - Wedding Invitation</title>
+				<title>Grafis Mutia - Wedding Inviteation</title>
 			</Head>
-			<SiteNav navigation={navigation} />
+			<SiteAudioDynamic />
 			<main className={`site-main ${styles.site_main_vndangan}`}>
 				{!dataSite?.visitorAgent?.isMobile ? (
-					<SiteBanner
-						intro={intro}
-						agenda={agenda}
-						gallery={gallery}
-						className={styles.site_banner}
-					/>
+					<>
+						<SiteNav navigation={navigation} />
+						<SiteBanner
+							intro={intro}
+							agenda={agenda}
+							gallery={gallery}
+							className={styles.site_banner}
+						/>
+					</>
 				) : null}
 				<WeddingCard
-					name={name}
+					name={nameInvite}
 					identity={identity}
 					agenda={agenda}
 					gallery={gallery}
@@ -48,7 +63,21 @@ export default function Home({
 					className={styles.site_wedding}
 				/>
 			</main>
-			<style global jsx>{`
+			<PopupInviteDynamic
+				open={togglePopupInvite}
+				closeHandler={() => setTogglePopupInvite(false)}
+				className='popup-invite'>
+				<FormInvite
+					title='Nama Tamu'
+					submitName={(getName) => {
+						setNameInvite(getName);
+						setTogglePopupInvite(false);
+					}}
+				/>
+			</PopupInviteDynamic>
+			<style
+				global
+				jsx>{`
 				[class*='navbar_vndangan'] + .site-main {
 					@apply <xl:pb-78px;
 				}
