@@ -8,6 +8,7 @@ import WeddingCard from '@layouts/WeddingCard';
 import styles from '@styles/Vndangan.module.css';
 import { useState } from 'react';
 import FormInvite from '@components/Vndangan/FormInvite';
+import { isEmpty } from 'validate.js';
 
 const SiteAudioDynamic = dynamic(() => import('@layouts/SiteAudio'), {
 	ssr: false,
@@ -42,7 +43,10 @@ export default function Home({
 			<main className={`site-main ${styles.site_main_vndangan}`}>
 				{!dataSite?.visitorAgent?.isMobile ? (
 					<>
-						<SiteNav navigation={navigation} />
+						<SiteNav
+							navigation={navigation}
+							className={styles.site_navigation}
+						/>
 						<SiteBanner
 							intro={intro}
 							agenda={agenda}
@@ -69,12 +73,14 @@ export default function Home({
 				className='popup-invite'>
 				<FormInvite
 					title='Nama Tamu'
+					defaultName={nameInvite}
 					submitName={(getName) => {
 						setNameInvite(getName);
 						setTogglePopupInvite(false);
 					}}
 				/>
 			</PopupInviteDynamic>
+
 			<style
 				global
 				jsx>{`

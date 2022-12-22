@@ -28,7 +28,7 @@ const playlists = [
 	},
 ];
 
-export default function SiteAudio({ navigation = [], className = '' }) {
+export default function SiteAudio({ className = '' }) {
 	const router = useRouter();
 	const audioRef = createRef();
 	const [toggleAudio, setToggleAudio] = useState(false);
@@ -37,17 +37,17 @@ export default function SiteAudio({ navigation = [], className = '' }) {
 
 	useEffect(() => {
 		if (isDefined(window)) {
-			// document.onclick = (e) => {
-			// 	if (autoPlay === true) {
-			// 		audioRef.current?.audio.current.play();
-			// 	}
+			document.onclick = (e) => {
+				if (autoPlay === true) {
+					audioRef.current?.audio.current.play();
+				}
 
-			// 	setAutoPlay(false);
-			// };
+				setAutoPlay(false);
+			};
 
 			document
 				.querySelector('#popup-root')
-				.addEventListener('click', function (event) {
+				?.addEventListener('click', function (event) {
 					if (autoPlay === true) {
 						audioRef.current?.audio.current.play();
 					}
@@ -87,7 +87,7 @@ export default function SiteAudio({ navigation = [], className = '' }) {
 		<div
 			className={`${styles.site_audio} ${
 				toggleAudio ? styles.site_audio__active : ''
-			}`}>
+			} ${className}`}>
 			<h3 className={styles.title_audio}>{playlists[playlist].title}</h3>
 			<AudioPlayer
 				ref={audioRef}

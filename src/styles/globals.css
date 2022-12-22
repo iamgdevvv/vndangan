@@ -241,6 +241,7 @@ textarea {
 	@apply <md:(items-start px-0 pt-0);
 
 	[class*='popupx-inner'] {
-		@apply rounded-t-0px;
+		@apply max-w-480px;
+		@apply <md:(rounded-t-0px);
 	}
 }

@@ -7,13 +7,19 @@ import dataProvider from '@data/provider-payment.json';
 import ImageVN from '@components/ImageVN';
 import styles from '@styles/FormInvite.module.css';
 import { isEmpty } from 'validate.js';
+import { useState } from 'react';
 
-export default function FormInvite({ title, submitName }) {
+export default function FormInvite({ title, defaultName, submitName }) {
 	const {
 		register,
 		handleSubmit,
+        setValue,
 		formState: { errors },
 	} = useForm();
+
+    useState(() => {
+        setValue('name', defaultName);
+    }, []);
 
 	const onSubmit = useCallback((data) => {
 		console.log(data);
@@ -37,6 +43,7 @@ export default function FormInvite({ title, submitName }) {
 						type='text'
 						placeholder='Isi Nama'
 						aria-invalid={Boolean(errors?.name)}
+						defaultValue={defaultName}
 						{...register('name', { required: true })}
 					/>
 				</div>

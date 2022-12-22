@@ -58,7 +58,7 @@
 	}
 
 	.brides_invitation_name {
-		@apply fsize-md font-bold mb-10px;
+		@apply fsize-md font-bold capitalize mb-10px;
 	}
 
 	.brides_invitation_info {
