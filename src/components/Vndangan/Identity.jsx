@@ -1,8 +1,29 @@
 import ImageVN from '@components/ImageVN';
+import queryRest from '@modules/query-rest';
 import styles from '@styles/Identity.module.css';
+import { useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { isEmpty, isObject } from 'validate.js';
 
-export default function Identity({ data, name }) {
+export default function Identity({ data = {}, name }) {
+	const [avatarIdentity, setAvatarIdentity] = useState({});
+
+	const fetchAvatarIdentity = useCallback(async () => {
+		try {
+			const getAvatarAsset = await queryRest({
+				url: `${process.env.CFL_URI}/assets/${data.thumbnail.sys.id}?access_token=${process.env.CFL_TOKEN}`,
+			});
+
+			setAvatarIdentity(getAvatarAsset?.response?.fields);
+		} catch (error) {
+			console.log(error);
+		}
+	}, [data]);
+
+	useEffect(() => {
+		fetchAvatarIdentity();
+	}, [fetchAvatarIdentity]);
+
 	if (isEmpty(data) || !isObject(data)) {
 		return null;
 	}
@@ -10,7 +31,10 @@ export default function Identity({ data, name }) {
 	return (
 		<>
 			<ImageVN
-				src={`/images/${data.photoIdentity}`}
+				src={`https:${avatarIdentity?.file?.url}`}
+				height={176}
+				width={176}
+				alt={avatarIdentity?.description}
 				parentClass={styles.photo_wedding_identity}
 			/>
 			<div className={styles.brides_wedding_identity}>
@@ -18,11 +42,11 @@ export default function Identity({ data, name }) {
 					Mempelai Pria
 				</span>
 				<span className={styles.brides_identity_name}>
-					{data.groomsName}
+					{data.groomName}
 				</span>
 				<span className={styles.brides_identity_parents}>
-					Putra dari Bapak {data.groomsFatherName} dan Ibu{' '}
-					{data.groomsMotherName}.
+					Putra dari Bapak {data.groomFatherName} dan Ibu{' '}
+					{data.groomMotherName}.
 				</span>
 			</div>
 			<div className={styles.brides_wedding_identity}>
@@ -30,11 +54,11 @@ export default function Identity({ data, name }) {
 					Mempelai Pria
 				</span>
 				<span className={styles.brides_identity_name}>
-					{data.bridesName}
+					{data.brideName}
 				</span>
 				<span className={styles.brides_identity_parents}>
-					Putra dari Bapak {data.bridesFatherName} dan Ibu{' '}
-					{data.bridesMotherName}.
+					Putra dari Bapak {data.brideFatherName} dan Ibu{' '}
+					{data.brideMotherName}.
 				</span>
 			</div>
 			<div className={styles.brides_wedding_invitation}>

@@ -9,15 +9,18 @@ const nextConfig = {
 		return config;
 	},
 	images: {
-		unoptimized: true,
 		dangerouslyAllowSVG: true,
 		contentSecurityPolicy:
 			"default-src 'self'; script-src 'none'; sandbox;",
+		domains: ['images.ctfassets.net'],
 	},
 	reactStrictMode: true,
 	swcMinify: true,
 	env: {
 		HOST_URL: process.env.HOST_URL,
+		CFL_COUPLE_ID: process.env.CFL_COUPLE_ID,
+		CFL_URI: process.env.CFL_URI,
+		CFL_TOKEN: process.env.CFL_TOKEN,
 		RECAPTCHA_SK: process.env.RECAPTCHA_SK,
 	},
 };

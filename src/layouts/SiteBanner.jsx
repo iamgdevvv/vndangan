@@ -6,6 +6,7 @@ import '@splidejs/react-splide/css';
 import ImageVN from '@components/ImageVN';
 import Agenda from '@components/Vndangan/Agenda';
 import styles from '@styles/SiteBanner.module.css';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 export default function SiteBanner({
 	intro = {},
@@ -13,7 +14,6 @@ export default function SiteBanner({
 	gallery = [],
 	className = '',
 }) {
-
 	const confImagesSplide = useMemo(() => {
 		return {
 			type: 'fade',
@@ -38,6 +38,8 @@ export default function SiteBanner({
 		};
 	}, []);
 
+	console.log('intro', intro);
+
 	return (
 		<div
 			role='banner'
@@ -48,26 +50,28 @@ export default function SiteBanner({
 					className={styles.banner_images}>
 					{gallery.map((image, index) => (
 						<SplideSlide key={`image-${index}`}>
-							<ImageVN src={`/images/${image.src}`} alt={image.caption} />
+							<ImageVN
+								src={`/images/${image.src}`}
+								alt={image.caption}
+							/>
 						</SplideSlide>
 					))}
 				</Splide>
 			) : null}
-			<div className={styles.banner_content}>
-				<h1 dangerouslySetInnerHTML={{ __html: xss(intro?.title) }} />
-				<div
-					className={styles.banner_content_desc}
-					dangerouslySetInnerHTML={{ __html: xss(intro?.description) }}
-				/>
-			</div>
+			<div
+				dangerouslySetInnerHTML={{
+					__html: xss(documentToHtmlString(intro?.introduce)),
+				}}
+				className={styles.banner_content}
+			/>
 			{isArray(agenda) ? (
 				<Splide
 					options={confAgendaSplide}
 					className={styles.banner_agenda}>
-					{agenda.map((itemAgenda) => (
-						<SplideSlide key={itemAgenda.id}>
+					{agenda.map((itemAgenda, index) => (
+						<SplideSlide key={itemAgenda.sys.id}>
 							<Agenda
-								data={itemAgenda}
+								data={itemAgenda?.fields}
 								intro={intro}
 								className={styles.slide_agenda}
 							/>

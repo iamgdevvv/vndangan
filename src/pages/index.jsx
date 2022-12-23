@@ -19,6 +19,7 @@ const PopupInviteDynamic = dynamic(() => import('@components/PopupX'), {
 });
 
 export default function Home({
+	couple,
 	navigation,
 	intro,
 	agenda,
@@ -48,7 +49,7 @@ export default function Home({
 							className={styles.site_navigation}
 						/>
 						<SiteBanner
-							intro={intro}
+							intro={couple}
 							agenda={agenda}
 							gallery={gallery}
 							className={styles.site_banner}
@@ -57,11 +58,11 @@ export default function Home({
 				) : null}
 				<WeddingCard
 					name={nameInvite}
-					identity={identity}
+					identity={couple}
 					agenda={agenda}
 					gallery={gallery}
 					loveStories={loveStories}
-					brideGroom={brideGroom}
+					// brideGroom={brideGroom}
 					guessBook={guessBook}
 					guide={guide}
 					className={styles.site_wedding}
@@ -98,8 +99,21 @@ export async function getServerSideProps({ req, res, query }) {
 		'public, s-maxage=10, stale-while-revalidate=59'
 	);
 
-	const { HOST_URL } = process.env;
+	const { HOST_URL, CFL_URI, CFL_COUPLE_ID, CFL_TOKEN } = process.env;
 	const { name } = query;
+
+
+	let responseCouple = [];
+
+	try {
+		const getResCouple = await queryRest({
+			url: `${CFL_URI}/entries/${CFL_COUPLE_ID}?access_token=${CFL_TOKEN}&content_type=couple`,
+		});
+
+		responseCouple = getResCouple?.response?.fields || [];
+	} catch (error) {
+		responseCouple = error;
+	}
 
 	let resposeNavigation = [];
 
@@ -141,10 +155,10 @@ export async function getServerSideProps({ req, res, query }) {
 
 	try {
 		const getResAgenda = await queryRest({
-			url: `${HOST_URL}/api/agenda`,
+			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=agenda`,
 		});
 
-		responseAgenda = getResAgenda?.response || [];
+		responseAgenda = getResAgenda?.response?.items || [];
 	} catch (error) {
 		responseAgenda = error;
 	}
@@ -211,6 +225,7 @@ export async function getServerSideProps({ req, res, query }) {
 
 	return {
 		props: {
+			couple: responseCouple,
 			navigation: resposeNavigation,
 			intro: responseIntro,
 			agenda: responseAgenda,

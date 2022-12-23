@@ -113,8 +113,8 @@ export default function WeddingCard({
 								</h2>
 								{agenda.map((itemAgenda) => (
 									<Agenda
-										data={itemAgenda}
-										key={itemAgenda.id}
+										data={itemAgenda?.fields}
+										key={itemAgenda.sys.id}
 									/>
 								))}
 							</div>

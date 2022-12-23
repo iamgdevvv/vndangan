@@ -27,13 +27,13 @@ export default async function handler(req, res) {
 			slug: 'gallery-cerita',
 			default: false,
 		},
-		{
-			id: 4,
-			icon: 'BiShapePolygon',
-			title: 'Pengiring Mempelai',
-			slug: 'pengiring-mempelai',
-			default: false,
-		},
+		// {
+		// 	id: 4,
+		// 	icon: 'BiShapePolygon',
+		// 	title: 'Pengiring Mempelai',
+		// 	slug: 'pengiring-mempelai',
+		// 	default: false,
+		// },
 		{
 			id: 5,
 			icon: 'BiBookReader',

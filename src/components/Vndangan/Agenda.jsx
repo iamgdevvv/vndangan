@@ -1,5 +1,5 @@
 import xss from 'xss';
-import { isObject } from 'validate.js';
+import { isEmpty, isObject } from 'validate.js';
 import { BiAlarm, BiCalendar, BiMap, BiCalendarPlus } from 'react-icons/bi';
 import {
 	number2digits,
@@ -11,7 +11,7 @@ import {
 import styles from '@styles/Agenda.module.css';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import Popup from 'reactjs-popup';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import { useState } from 'react';
 import PopupX from '../PopupX';
 
@@ -46,11 +46,15 @@ export default function Agenda({
 	const dataDate = useMemo(() => {
 		let getDataDate = '';
 
-		if (data?.dateStart) {
+		if (!isEmpty(data?.dateStart)) {
 			getDataDate = printDate(data?.dateStart);
 
-			if (data?.dateEnd) {
-				getDataDate = `${getDataDate} - ${printDate(data?.dateEnd)}`;
+			if (!isEmpty(data?.dateEnd)) {
+				const getDateEnd = printDate(data?.dateEnd);
+
+				if( getDateEnd !== getDataDate ) {
+					getDataDate = `${getDataDate} - ${printDate(data?.dateEnd)}`;
+				}
 			}
 		}
 
@@ -58,26 +62,26 @@ export default function Agenda({
 	}, [data]);
 
 	const dataAddress = useMemo(() => {
-		let getDataAddress = '';
-
-		if (data?.address) {
-			getDataAddress = `${data?.address}${
-				data?.district ? `, ${data?.district}` : null
-			}${data?.province ? `, ${data?.province}` : null}`;
+		if (isEmpty(data?.address) || !isObject(data?.address)) {
+			return '';
 		}
 
-		return getDataAddress;
+		return documentToHtmlString(data?.address);
 	}, [data]);
 
 	const urlAddress = useMemo(() => {
-		let queryAddress = dataAddress;
+		let queryAddress = !isEmpty(dataAddress) ? escapeHtml(dataAddress) : '';
 
-		if (isObject(data?.maploc) && data?.maploc?.lat && data?.maploc?.long) {
-			queryAddress = `${data.maploc.lat},${data.maploc.long}`;
+		if (
+			isObject(data?.location) &&
+			data?.location?.lat &&
+			data?.location?.lon
+		) {
+			queryAddress = `${data.location.lat},${data.location.lon}`;
 		}
 
 		return `https://maps.google.com/maps?z=14&hl=id&q=${queryAddress}&output=embed`;
-	}, [data, dataAddress]);
+	}, [data]);
 
 	const urlCalendar = useMemo(() => {
 		const calendarStart = new Date(data?.dateStart);
@@ -127,7 +131,7 @@ export default function Agenda({
 							</span>
 						</li>
 					) : null}
-					{dataDate ? (
+					{!isEmpty(dataDate) ? (
 						<li
 							className={`${styles.item_info_agenda} ${styles.item_info_agenda__date}`}>
 							<BiCalendar className={styles.icon_info_agenda} />
@@ -136,16 +140,23 @@ export default function Agenda({
 							</span>
 						</li>
 					) : null}
-					{dataAddress ? (
+					{!isEmpty(dataAddress) ? (
 						<li
 							className={`${styles.item_info_agenda} ${styles.item_info_agenda__date}`}>
 							<Link
 								href={urlAddress}
-								target='_blank'>
+								target='_blank'
+								onClick={(e) => {
+									e.preventDefault();
+									setPopupMap(true);
+								}}>
 								<BiMap className={styles.icon_info_agenda} />
-								<span className={styles.label_info_agenda}>
-									{dataAddress}
-								</span>
+								<div
+									className={styles.label_info_agenda}
+									dangerouslySetInnerHTML={{
+										__html: xss(dataAddress),
+									}}
+								/>
 							</Link>
 						</li>
 					) : null}
@@ -178,7 +189,8 @@ export default function Agenda({
 				<iframe
 					title={`Agenda ${titleAgenda}`}
 					frameborder='0'
-					src={urlAddress} />
+					src={urlAddress}
+				/>
 			</PopupX>
 		</>
 	);

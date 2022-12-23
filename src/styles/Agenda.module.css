@@ -15,7 +15,7 @@
 
 		&,
 		&>a {
-			@apply flexs;
+			@apply flexs items-start;
 		}
 	}
 

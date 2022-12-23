@@ -67,8 +67,6 @@ export default function SiteAudio({ className = '' }) {
 		}
 	}, [playlist]);
 
-	console.log('toggleAudio', toggleAudio);
-
 	const handleNextPlaylist = useCallback(() => {
 		const currentPlaylist = playlist;
 
