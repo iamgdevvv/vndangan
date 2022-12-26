@@ -8,7 +8,7 @@ import WeddingCard from '@layouts/WeddingCard';
 import styles from '@styles/Vndangan.module.css';
 import { useState } from 'react';
 import FormInvite from '@components/Vndangan/FormInvite';
-import { isEmpty } from 'validate.js';
+import { isArray, isEmpty } from 'validate.js';
 
 const SiteAudioDynamic = dynamic(() => import('@layouts/SiteAudio'), {
 	ssr: false,
@@ -20,14 +20,11 @@ const PopupInviteDynamic = dynamic(() => import('@components/PopupX'), {
 
 export default function Home({
 	couple,
-	navigation,
-	intro,
 	agenda,
-	identity,
 	gallery,
 	loveStories,
 	brideGroom,
-	guessBook,
+	guestBook,
 	guide,
 	name,
 }) {
@@ -44,12 +41,9 @@ export default function Home({
 			<main className={`site-main ${styles.site_main_vndangan}`}>
 				{!dataSite?.visitorAgent?.isMobile ? (
 					<>
-						<SiteNav
-							navigation={navigation}
-							className={styles.site_navigation}
-						/>
+						<SiteNav className={styles.site_navigation} />
 						<SiteBanner
-							intro={couple}
+							couple={couple}
 							agenda={agenda}
 							gallery={gallery}
 							className={styles.site_banner}
@@ -58,12 +52,12 @@ export default function Home({
 				) : null}
 				<WeddingCard
 					name={nameInvite}
-					identity={couple}
+					couple={couple}
 					agenda={agenda}
 					gallery={gallery}
 					loveStories={loveStories}
-					// brideGroom={brideGroom}
-					guessBook={guessBook}
+					brideGroom={brideGroom}
+					guestBook={guestBook}
 					guide={guide}
 					className={styles.site_wedding}
 				/>
@@ -96,57 +90,42 @@ export default function Home({
 export async function getServerSideProps({ req, res, query }) {
 	res.setHeader(
 		'Cache-Control',
-		'public, s-maxage=10, stale-while-revalidate=59'
+		'public, s-maxage=3600, stale-while-revalidate=59'
 	);
 
 	const { HOST_URL, CFL_URI, CFL_COUPLE_ID, CFL_TOKEN } = process.env;
 	const { name } = query;
 
-
 	let responseCouple = [];
 
 	try {
-		const getResCouple = await queryRest({
+		const queryCouple = await queryRest({
 			url: `${CFL_URI}/entries/${CFL_COUPLE_ID}?access_token=${CFL_TOKEN}&content_type=couple`,
 		});
 
-		responseCouple = getResCouple?.response?.fields || [];
+		responseCouple = queryCouple?.response?.fields || [];
 	} catch (error) {
 		responseCouple = error;
-	}
-
-	let resposeNavigation = [];
-
-	try {
-		const getResNavigation = await queryRest({
-			url: `${HOST_URL}/api/internal/navigation`,
-		});
-
-		resposeNavigation = getResNavigation?.response || [];
-	} catch (error) {
-		resposeNavigation = error;
-	}
-
-	let responseIntro = {};
-
-	try {
-		const getResIntro = await queryRest({
-			url: `${HOST_URL}/api/intro`,
-		});
-
-		responseIntro = getResIntro?.response || {};
-	} catch (error) {
-		responseIntro = error;
 	}
 
 	let responseGallery = {};
 
 	try {
-		const getResGallery = await queryRest({
-			url: `${HOST_URL}/api/gallery`,
-		});
+		const getGalleryAsset = [];
 
-		responseGallery = getResGallery?.response || {};
+		if (responseCouple?.gallery) {
+			responseCouple?.gallery.map(async (itemGallery) => {
+				if (!isEmpty(itemGallery?.sys?.id)) {
+					const queryGalleryAsset = await queryRest({
+						url: `${CFL_URI}/assets/${itemGallery.sys.id}?access_token=${CFL_TOKEN}`,
+					});
+
+					getGalleryAsset.push(queryGalleryAsset?.response?.fields);
+				}
+			});
+		}
+
+		responseGallery = getGalleryAsset || {};
 	} catch (error) {
 		responseGallery = error;
 	}
@@ -154,35 +133,33 @@ export async function getServerSideProps({ req, res, query }) {
 	let responseAgenda = [];
 
 	try {
-		const getResAgenda = await queryRest({
-			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=agenda`,
+		const agedaIds =
+			responseCouple?.agenda?.map((agenda) => agenda.sys.id) || [];
+
+		const queryAgenda = await queryRest({
+			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=agenda&sys.id[in]=${agedaIds.join(
+				','
+			)}`,
 		});
 
-		responseAgenda = getResAgenda?.response?.items || [];
+		responseAgenda = queryAgenda?.response?.items || [];
 	} catch (error) {
 		responseAgenda = error;
-	}
-
-	let responseIdentify = [];
-
-	try {
-		const getResIdentify = await queryRest({
-			url: `${HOST_URL}/api/identity`,
-		});
-
-		responseIdentify = getResIdentify?.response || [];
-	} catch (error) {
-		responseIdentify = error;
 	}
 
 	let responseLoveStories = [];
 
 	try {
-		const getResLoveStories = await queryRest({
-			url: `${HOST_URL}/api/love-stories`,
+		const storyIds =
+			responseCouple?.story?.map((story) => story.sys.id) || [];
+
+		const queryStories = await queryRest({
+			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=story&sys.id[in]=${storyIds.join(
+				','
+			)}`,
 		});
 
-		responseLoveStories = getResLoveStories?.response || [];
+		responseLoveStories = queryStories?.response?.items || [];
 	} catch (error) {
 		responseLoveStories = error;
 	}
@@ -190,35 +167,50 @@ export async function getServerSideProps({ req, res, query }) {
 	let responseBrideGroom = [];
 
 	try {
-		const getResBrideGroom = await queryRest({
-			url: `${HOST_URL}/api/bridegroom`,
+		const bridegroomIds =
+			responseCouple?.bridegroom?.map(
+				(bridegroom) => bridegroom.sys.id
+			) || [];
+
+		const queryBrideGroom = await queryRest({
+			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=bridegroom&sys.id[in]=${bridegroomIds.join(
+				','
+			)}`,
 		});
 
-		responseBrideGroom = getResBrideGroom?.response || [];
+		responseBrideGroom = queryBrideGroom?.response?.items || [];
 	} catch (error) {
 		responseBrideGroom = error;
 	}
 
-	let responseGuessBook = [];
+	let responseGuestBook = [];
 
 	try {
-		const getResGuessBook = await queryRest({
-			url: `${HOST_URL}/api/guess-book`,
+		const guestBookIds =
+			responseCouple?.guestBook?.map((guestBook) => guestBook.sys.id) ||
+			[];
+
+		const queryGuestBook = await queryRest({
+			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=guestBook&sys.id[in]=${guestBookIds.join(
+				','
+			)}`,
 		});
 
-		responseGuessBook = getResGuessBook?.response || [];
+		responseGuestBook = queryGuestBook?.response?.items || [];
 	} catch (error) {
-		responseGuessBook = error;
+		responseGuestBook = error;
 	}
 
 	let responseGuide = [];
 
 	try {
-		const getResGuide = await queryRest({
-			url: `${HOST_URL}/api/guide`,
+		const guideId = responseCouple?.guide?.sys?.id;
+
+		const queryGuide = await queryRest({
+			url: `${CFL_URI}/entries/${guideId}?access_token=${CFL_TOKEN}`,
 		});
 
-		responseGuide = getResGuide?.response || [];
+		responseGuide = queryGuide?.response || {};
 	} catch (error) {
 		responseGuide = error;
 	}
@@ -226,14 +218,11 @@ export async function getServerSideProps({ req, res, query }) {
 	return {
 		props: {
 			couple: responseCouple,
-			navigation: resposeNavigation,
-			intro: responseIntro,
 			agenda: responseAgenda,
-			identity: responseIdentify,
 			gallery: responseGallery,
 			loveStories: responseLoveStories,
 			brideGroom: responseBrideGroom,
-			guessBook: responseGuessBook,
+			guestBook: responseGuestBook,
 			guide: responseGuide,
 			name: name || 'Anda & Sekeluarga',
 		},

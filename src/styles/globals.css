@@ -178,7 +178,7 @@ h6 {
 input,
 select,
 textarea {
-	@apply !leading-normal caret-zinc-900 w-full border border-zinc-300 py-10px px-20px rounded-4px transition;
+	@apply  !leading-normal caret-zinc-900 w-full border border-zinc-300 py-10px px-20px rounded-4px transition;
 	@apply md: (text-16px);
 	@apply <md: (text-14px);
 
@@ -215,7 +215,8 @@ textarea {
 		}
 
 		img {
-			@apply rounded-8px;
+			@apply rounded-8px bg-gray-200;
+			@apply md: min-h-300px;
 			@apply <md: min-h-60vh;
 		}
 	}
@@ -242,10 +243,10 @@ textarea {
 }
 
 .popup-invite-content .popup-invite {
-	@apply <md:(items-start px-0 pt-0);
+	@apply <md: (items-start px-0 pt-0);
 
 	[class*='popupx-inner'] {
 		@apply max-w-480px;
-		@apply <md:(rounded-t-0px);
+		@apply <md: (rounded-t-0px);
 	}
 }

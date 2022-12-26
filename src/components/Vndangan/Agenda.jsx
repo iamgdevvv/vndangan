@@ -17,7 +17,7 @@ import PopupX from '../PopupX';
 
 export default function Agenda({
 	data = {},
-	intro = {},
+	couple = {},
 	title = '',
 	className = '',
 }) {
@@ -105,13 +105,13 @@ export default function Agenda({
 		}
 
 		return `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${calendarDate}&details=Undangan ${escapeHtml(
-			intro.title
+			couple.title
 		)} %0A${dataAddress} pada ${dataDate} dengan waktu ${dataTime}. %0A %0A${xss(
-			intro.description
+			couple.description
 		)}&location=${dataAddress}&text=Undangan ${titleAgenda} ${escapeHtml(
-			intro.title
+			couple.title
 		)}`;
-	}, [data, intro]);
+	}, [data, couple]);
 
 	if (!isObject(data)) {
 		return null;

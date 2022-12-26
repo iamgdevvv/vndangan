@@ -1,15 +1,16 @@
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import xss from 'xss';
-import { isObject, isArray } from 'validate.js';
+import { isObject, isArray, isEmpty } from 'validate.js';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import ImageVN from '@components/ImageVN';
 import Agenda from '@components/Vndangan/Agenda';
 import styles from '@styles/SiteBanner.module.css';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import queryRest from '@modules/query-rest';
 
 export default function SiteBanner({
-	intro = {},
+	couple = {},
 	agenda = [],
 	gallery = [],
 	className = '',
@@ -38,21 +39,21 @@ export default function SiteBanner({
 		};
 	}, []);
 
-	console.log('intro', intro);
-
 	return (
 		<div
 			role='banner'
 			className={`${styles.site_banner} ${className}`}>
-			{isArray(gallery) ? (
+			{!isEmpty(gallery) && isArray(gallery) ? (
 				<Splide
 					options={confImagesSplide}
 					className={styles.banner_images}>
-					{gallery.map((image, index) => (
+					{gallery.map((asset, index) => (
 						<SplideSlide key={`image-${index}`}>
 							<ImageVN
-								src={`/images/${image.src}`}
-								alt={image.caption}
+								src={`https:${asset?.file?.url}`}
+								width={asset?.file?.details?.image?.width}
+								height={asset?.file?.details?.image?.height}
+								alt={asset?.description}
 							/>
 						</SplideSlide>
 					))}
@@ -60,7 +61,7 @@ export default function SiteBanner({
 			) : null}
 			<div
 				dangerouslySetInnerHTML={{
-					__html: xss(documentToHtmlString(intro?.introduce)),
+					__html: xss(documentToHtmlString(couple?.introduce)),
 				}}
 				className={styles.banner_content}
 			/>
@@ -72,7 +73,7 @@ export default function SiteBanner({
 						<SplideSlide key={itemAgenda.sys.id}>
 							<Agenda
 								data={itemAgenda?.fields}
-								intro={intro}
+								couple={couple}
 								className={styles.slide_agenda}
 							/>
 						</SplideSlide>

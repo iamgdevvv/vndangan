@@ -42,9 +42,18 @@
 	}
 
 	.image_gallery_wedding {
-		@apply w-full object-cover rounded-12px;
-		@apply md: (h-300px);
-		@apply <md: (h-200px);
+		@apply relative w-full rounded-12px overflow-hidden;
+
+		[class~='image-wrapper'],
+		img {
+			@apply w-full;
+			@apply md: (h-300px);
+			@apply <md: (h-200px);
+		}
+
+		img {
+			@apply object-cover;
+		}
 	}
 
 	.desc_gallery_wedding {

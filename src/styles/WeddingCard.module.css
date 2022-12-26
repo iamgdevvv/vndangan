@@ -2,14 +2,16 @@
 	@apply w-full bg-zinc-200;
 	@apply 2xl: (pt-40px pl-40px pr-20px pb-20px);
 	@apply <2xl: (pt-30px pl-30px pr-10px pb-10px);
-	@apply <2xl: (pt-20px pl-20px pr-10px pb-10px);
+	@apply <md: (p-10px);
 }
 
 .wedding_cards {
 	@apply w-full h-full;
 
 	&>[class~='splide__track'] {
-		@apply h-full !pr-20px pb-20px overflow-visible;
+		@apply h-full overflow-visible;
+		@apply md: ( !pr-20px pb-20px);
+		@apply <md: ( !pr-10px pb-10px);
 
 		&>[class~='splide__list'] {
 			@apply h-full;
@@ -55,10 +57,15 @@
 
 	.item_wedding_card {
 		@apply relative z-3 w-full h-full flex flex-col bg-white rounded-20px shadow shadow-zinc-200 transform-gpu translate-x-10px translate-y-10px transition overflow-hidden;
-		@apply before: (_content absolute -top-10px -left-10px z-1 w-full h-full bg-transparent bg-no-repeat opacity-30);
-		@apply after: (_content absolute -bottom-10px -right-10px z-2 w-full h-full bg-transparent bg-no-repeat opacity-30);
+		@apply before: (_content absolute -top-10px -left-10px z-1 w-full h-full bg-transparent bg-no-repeat opacity-30 animate-pulse);
+		@apply after: (_content absolute -bottom-10px -right-10px z-2 w-full h-full bg-transparent bg-no-repeat opacity-30 animate-pulse);
 		@apply 2xl: (p-40px pb-128px);
 		@apply <2xl: (p-20px pb-88px);
+
+		&:before,
+		&:after {
+			animation: wed_pulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+		}
 
 		&>* {
 			@apply relative z-3;
@@ -103,12 +110,12 @@
 	}
 }
 
-.caption_guess_book {
+.caption_guest_book {
 	@apply flexs !leading-relaxed font-semibold;
 	@apply md: (text-16px);
 	@apply <md: (text-14px flex-col items-start);
 
-	.donate_guess_book {
+	.donate_guest_book {
 		@apply flexs py-4px px-10px !leading-relaxed bg-teal-100 rounded-4px;
 		@apply md: (text-14px ml-10px);
 		@apply <md: (text-12px mt-4px);
@@ -124,5 +131,16 @@
 				@apply w-auto h-16px min-h-0 rounded-0px;
 			}
 		}
+	}
+}
+
+@keyframes wed_pulse {
+	0%,
+	100% {
+		@apply opacity-30
+	}
+
+	50% {
+		@apply opacity-10;
 	}
 }

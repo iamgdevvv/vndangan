@@ -12,7 +12,7 @@ const nextConfig = {
 		dangerouslyAllowSVG: true,
 		contentSecurityPolicy:
 			"default-src 'self'; script-src 'none'; sandbox;",
-		domains: ['images.ctfassets.net'],
+		domains: ['images.ctfassets.net', 'source.unsplash.com'],
 	},
 	reactStrictMode: true,
 	swcMinify: true,

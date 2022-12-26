@@ -6,20 +6,22 @@ import ImageVN from '@components/ImageVN';
 import Agenda from '@components/Vndangan/Agenda';
 import Identity from '@components/Vndangan/Identity';
 import LoveStory from '@components/Vndangan/LoveStory';
-import Gallery from '@components/Vndangan/Gallery';
+import Gallery from '@components/GalleryCF';
 import BrideGroom from '@components/Vndangan/BrideGroom';
 import styles from '@styles/WeddingCard.module.css';
 import { printCurrency } from '@modules/utils';
 import FormGuest from '@components/Vndangan/FormGuest';
 import Guide from '@components/Vndangan/Guide';
+import GuestBook from '@components/Vndangan/GuestBook';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 export default function WeddingCard({
-	identity = {},
+	couple = {},
 	agenda = [],
 	gallery = [],
 	loveStories = [],
 	brideGroom = [],
-	guessBook = [],
+	guestBook = [],
 	guide = [],
 	name = '',
 	className = '',
@@ -37,33 +39,35 @@ export default function WeddingCard({
 		};
 	}, []);
 
-	const dataGuessBook = useMemo(() => {
-		const data = [];
+	const dataGuestBook = useMemo(() => {
+		if (isEmpty(guestBook) || !isArray(guestBook)) {
+			return [];
+		}
 
-		guessBook.map((guess) => {
-			data.push({
-				src: guess.image,
+		return guestBook.map((guest) => {
+			return {
+				src: `https://source.unsplash.com/480x320/?romance,wedding&name=${guest?.fields?.name}`,
 				caption: (
-					<span className={styles.caption_guess_book}>
-						{guess.name}
-						{guess?.donateProvider !== 'none' &&
-						!isEmpty(guess?.donateNominal) ? (
-							<span className={styles.donate_guess_book}>
+					<span className={styles.caption_guest_book}>
+						{guest?.fields?.name}
+						{!isEmpty(guest?.fields?.donateProvider) &&
+						guest?.fields?.donateProvider !== 'none' ? (
+							<span className={styles.donate_guest_book}>
 								<ImageVN
+									src={`/images/icon-donate-${guest?.fields?.donateProvider}.svg`}
+									width={60}
+									height={60}
 									parentClass={styles.icon_donate}
-									src={`/images/icon-donate-${guess?.donateProvider}.svg`}
 								/>
-								{printCurrency(guess?.donateNominal)}
+								{printCurrency(guest?.fields?.donateNominal)}
 							</span>
 						) : null}
 					</span>
 				),
-				desc: guess.desc,
-			});
+				desc: documentToHtmlString(guest?.fields?.message),
+			};
 		});
-
-		return data;
-	}, [guessBook]);
+	}, [guestBook]);
 
 	return (
 		<div
@@ -92,14 +96,14 @@ export default function WeddingCard({
 					}
 				}}>
 				<SplideTrack>
-					{!isEmpty(identity) ? (
-						<SplideSlide className='identity'>
+					{!isEmpty(couple) ? (
+						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
-									Undangan Pernikahan
+									{couple?.titleIdentity}
 								</h2>
 								<Identity
-									data={identity}
+									data={couple}
 									name={name}
 								/>
 							</div>
@@ -109,7 +113,7 @@ export default function WeddingCard({
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
-									Rentetan Acara Pernikahan
+									{couple?.titleAgenda}
 								</h2>
 								{agenda.map((itemAgenda) => (
 									<Agenda
@@ -123,13 +127,11 @@ export default function WeddingCard({
 					{!isEmpty(gallery) || !isEmpty(loveStories) ? (
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
-								<h2 className={styles.title_wedding_card}>
-									Gallery & Cerita
-								</h2>
+								<h2 className={styles.title_wedding_card}>{couple?.titleStoryGallery}</h2>
 								<Gallery data={gallery} />
 								<LoveStory
 									data={loveStories}
-									title='Cerita Kisah Cinta'
+									title={couple?.titleStory}
 								/>
 							</div>
 						</SplideSlide>
@@ -138,7 +140,7 @@ export default function WeddingCard({
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
-									Pengiring Mempelai
+									{couple?.titleBrideGroom}
 								</h2>
 								<BrideGroom data={brideGroom} />
 								<ImageVN
@@ -152,14 +154,14 @@ export default function WeddingCard({
 							</div>
 						</SplideSlide>
 					) : null}
-					{!isEmpty(dataGuessBook) ? (
+					{!isEmpty(dataGuestBook) ? (
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
-									Buku Tamu & Tanda Kasih
+									{couple?.titleGuestBook}
 								</h2>
-								<Gallery data={dataGuessBook} />
-								<FormGuest title='Pesan Tanda Kasih' />
+								<GuestBook data={dataGuestBook} />
+								<FormGuest title={couple?.titleFormGuest} />
 							</div>
 						</SplideSlide>
 					) : null}
@@ -167,12 +169,9 @@ export default function WeddingCard({
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
-									Panduan & Protokol
+									{couple?.titleGuide}
 								</h2>
-								<Guide
-									data={guide}
-									title='Panduan & Protokol'
-								/>
+								<Guide data={guide} />
 							</div>
 						</SplideSlide>
 					) : null}

@@ -1,3 +1,4 @@
+import ImageCF from '@components/ImageCF';
 import ImageVN from '@components/ImageVN';
 import queryRest from '@modules/query-rest';
 import styles from '@styles/Identity.module.css';
@@ -10,11 +11,11 @@ export default function Identity({ data = {}, name }) {
 
 	const fetchAvatarIdentity = useCallback(async () => {
 		try {
-			const getAvatarAsset = await queryRest({
-				url: `${process.env.CFL_URI}/assets/${data.thumbnail.sys.id}?access_token=${process.env.CFL_TOKEN}`,
+			const queryAvatarAsset = await queryRest({
+				url: `/api/contentful/assets/${data.thumbnail.sys.id}`,
 			});
 
-			setAvatarIdentity(getAvatarAsset?.response?.fields);
+			setAvatarIdentity(queryAvatarAsset?.response[0]);
 		} catch (error) {
 			console.log(error);
 		}
@@ -30,12 +31,11 @@ export default function Identity({ data = {}, name }) {
 
 	return (
 		<>
-			<ImageVN
-				src={`https:${avatarIdentity?.file?.url}`}
+			<ImageCF
+				id={data.thumbnail.sys.id}
 				height={176}
 				width={176}
-				alt={avatarIdentity?.description}
-				parentClass={styles.photo_wedding_identity}
+				className={styles.photo_wedding_identity}
 			/>
 			<div className={styles.brides_wedding_identity}>
 				<span className={styles.brides_identity_sublabel}>

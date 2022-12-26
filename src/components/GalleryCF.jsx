@@ -5,8 +5,11 @@ import { isArray, isEmpty } from 'validate.js';
 import styles from '@styles/Gallery.module.css';
 import { useState } from 'react';
 import PopupX from '@components/PopupX';
+import { useEffect } from 'react';
+import { useCallback } from 'react';
+import queryRest from '@modules/query-rest';
 
-export default function Gallery({ data }) {
+export default function Gallery({ data = [] }) {
 	const [popupGallery, setPopupGallery] = useState(false);
 
 	const confGallerySplide = useMemo(() => {
@@ -16,7 +19,7 @@ export default function Gallery({ data }) {
 			rewind: true,
 			drag: false,
 			autoplay: true,
-			interval: 1000,
+			interval: 1600,
 			arrows: false,
 			pagination: true,
 			gap: '10px',
@@ -32,27 +35,22 @@ export default function Gallery({ data }) {
 			<Splide
 				options={confGallerySplide}
 				className={styles.gallery_wedding}>
-				{data.map((itemGallery, index) => (
+				{data.map((asset, index) => (
 					<SplideSlide key={`image-${index}`}>
 						<div className={styles.gallery_wedding_item}>
 							<ImageVN
-								src={`/images/${itemGallery.src}`}
-								alt={itemGallery.caption}
-								className={styles.image_gallery_wedding}
+								src={`https:${asset?.file?.url}`}
+								width={520}
+								height={300}
+								alt={asset?.title || asset?.description}
+								parentClass={styles.image_gallery_wedding}
 								onClick={() => setPopupGallery(index)}
 							/>
-							{itemGallery?.desc ? (
-								<div className={styles.desc_gallery_wedding}>
-									<div className={styles.desc_inner}>
-										{itemGallery.desc}
-									</div>
-								</div>
-							) : null}
-							{itemGallery?.caption ? (
+							{asset?.title ? (
 								<figcaption
 									aria-hidden='true'
 									onClick={() => setPopupGallery(index)}>
-									{itemGallery.caption}
+									{asset?.description}
 								</figcaption>
 							) : null}
 						</div>
@@ -64,11 +62,11 @@ export default function Gallery({ data }) {
 				closeHandler={() => setPopupGallery(false)}
 				className='popup-gallery'>
 				<ImageVN
-					src={`/images/${data[popupGallery]?.src}`}
-					alt={data[popupGallery]?.caption}
+					src={`https:${data[popupGallery]?.file?.url}`}
+					alt={data[popupGallery]?.description}
 				/>
-				{data[popupGallery]?.caption ? (
-					<figcaption>{data[popupGallery]?.caption}</figcaption>
+				{data[popupGallery]?.title ? (
+					<figcaption>{data[popupGallery]?.title}</figcaption>
 				) : null}
 			</PopupX>
 		</>
