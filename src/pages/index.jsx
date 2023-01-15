@@ -190,10 +190,14 @@ export async function getServerSideProps({ req, res, query }) {
 			responseCouple?.guestBook?.map((guestBook) => guestBook.sys.id) ||
 			[];
 
+		// const queryGuestBook = await queryRest({
+		// 	url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=guestBook&sys.id[in]=${guestBookIds.join(
+		// 		','
+		// 	)}`,
+		// });
+
 		const queryGuestBook = await queryRest({
-			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=guestBook&sys.id[in]=${guestBookIds.join(
-				','
-			)}`,
+			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=guestBook`,
 		});
 
 		responseGuestBook = queryGuestBook?.response?.items || [];
