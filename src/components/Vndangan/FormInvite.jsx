@@ -24,7 +24,7 @@ export default function FormInvite({ title, defaultName, submitName }) {
 
 		return () => {
 			clearInterval(focusTimeout);
-		}
+		};
 	}, []);
 
 	const onSubmit = useCallback((data) => {
@@ -50,7 +50,6 @@ export default function FormInvite({ title, defaultName, submitName }) {
 						placeholder='Isi Nama'
 						aria-invalid={Boolean(errors?.name)}
 						defaultValue={defaultName}
-						autoFocus
 						{...register('name', { required: true })}
 					/>
 				</div>
