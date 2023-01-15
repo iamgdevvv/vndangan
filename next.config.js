@@ -20,7 +20,10 @@ const nextConfig = {
 		HOST_URL: process.env.HOST_URL,
 		CFL_COUPLE_ID: process.env.CFL_COUPLE_ID,
 		CFL_URI: process.env.CFL_URI,
+		CFL_MG_URI: process.env.CFL_MG_URI,
 		CFL_TOKEN: process.env.CFL_TOKEN,
+		CFL_MG_TOKEN: process.env.CFL_MG_TOKEN,
+		MAIL_TOKEN: process.env.MAIL_TOKEN,
 		RECAPTCHA_SK: process.env.RECAPTCHA_SK,
 	},
 };

@@ -13,13 +13,19 @@ export default function FormInvite({ title, defaultName, submitName }) {
 	const {
 		register,
 		handleSubmit,
-        setValue,
+		setValue,
+		setFocus,
 		formState: { errors },
 	} = useForm();
 
-    useState(() => {
-        setValue('name', defaultName);
-    }, []);
+	useState(() => {
+		setValue('name', defaultName);
+		const focusTimeout = setTimeout(() => setFocus('name'), 0);
+
+		return () => {
+			clearInterval(focusTimeout);
+		}
+	}, []);
 
 	const onSubmit = useCallback((data) => {
 		console.log(data);
@@ -44,6 +50,7 @@ export default function FormInvite({ title, defaultName, submitName }) {
 						placeholder='Isi Nama'
 						aria-invalid={Boolean(errors?.name)}
 						defaultValue={defaultName}
+						autoFocus
 						{...register('name', { required: true })}
 					/>
 				</div>

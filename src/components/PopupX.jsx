@@ -27,7 +27,7 @@ function PopupX({
 				clearInterval(delayClose);
 			};
 		}
-	}, []);
+	}, [closeHandler]);
 
 	return (
 		<Popup

@@ -1,14 +1,23 @@
 import { useCallback, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { IoHeartSharp } from 'react-icons/io5';
+import { IoHeartSharp, IoSyncOutline } from 'react-icons/io5';
 import Select from 'react-select';
 import ReCAPTCHA from 'react-google-recaptcha';
 import dataProvider from '@data/provider-payment.json';
 import ImageVN from '@components/ImageVN';
 import styles from '@styles/FormGuest.module.css';
-import { isEmpty } from 'validate.js';
+import { isEmpty, isObject } from 'validate.js';
+import queryRest from '@modules/query-rest';
+import { useState } from 'react';
+import PopupX from '@components/PopupX';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function FormGuest({ title }) {
+	const router = useRouter();
+	const [stateProgress, setStateProgress] = useState(null);
+	const [infoProgress, setInfoProgress] = useState({});
+
 	const {
 		control,
 		trigger,
@@ -46,8 +55,167 @@ export default function FormGuest({ title }) {
 		return option.label;
 	}, []);
 
-	const onSubmit = useCallback((data) => {
+	const onSubmit = useCallback(async (data) => {
+		setStateProgress(true);
 		console.log(data);
+
+		const storeGuessBook = {
+			fields: {
+				identifier: {
+					'en-US': `${data.name} - Grafis Nuresa`,
+				},
+				name: {
+					'en-US': data.name,
+				},
+				donateNominal: {
+					'en-US': Number(data.nominal),
+				},
+				donateProvider: {
+					'en-US': data.provider,
+				},
+				message: {
+					'en-US': {
+						nodeType: 'document',
+						data: {},
+						content: [
+							{
+								nodeType: 'paragraph',
+								data: {},
+								content: [
+									{
+										nodeType: 'text',
+										value: data.message,
+										marks: [],
+										data: {},
+									},
+								],
+							},
+						],
+					},
+				},
+			},
+			sys: {
+				id: 'guestBook',
+				createdAt: new Date().toISOString(),
+				updatedAt: new Date().toISOString(),
+				publishedAt: new Date().toISOString(),
+				firstPublishedAt: new Date().toISOString(),
+				// createdBy: {
+				// 	sys: {
+				// 		type: 'Link',
+				// 		linkType: 'User',
+				// 		id: '5MaFCcbQggleTl4RpWeVQP',
+				// 	},
+				// },
+				// updatedBy: {
+				// 	sys: {
+				// 		type: 'Link',
+				// 		linkType: 'User',
+				// 		id: '5MaFCcbQggleTl4RpWeVQP',
+				// 	},
+				// },
+				// publishedBy: {
+				// 	sys: {
+				// 		type: 'Link',
+				// 		linkType: 'User',
+				// 		id: '5MaFCcbQggleTl4RpWeVQP',
+				// 	},
+				// },
+			},
+		};
+
+		try {
+			const headersGuestBook = new Headers({
+				'Authorization': `Bearer ${process.env.CFL_MG_TOKEN}`,
+				'Content-Type': 'application/vnd.contentful.management.v1+json',
+				'X-Contentful-Content-Type': 'guestBook',
+			});
+
+			const queryGuestBook = await queryRest({
+				url: `${process.env.CFL_MG_URI}/entries?access_token=${process.env.CFL_MG_TOKEN}`,
+				options: {
+					method: 'POST',
+					headers: headersGuestBook,
+					body: JSON.stringify(storeGuessBook),
+				},
+			});
+
+			if (queryGuestBook) {
+				const statusQuery = queryGuestBook?.status;
+
+				if (statusQuery > 199 && statusQuery < 300) {
+					// const mailData = new FormData();
+					// mailData.append('access_key', process.env.MAIL_TOKEN);
+					// mailData.append(
+					// 	'subject',
+					// 	`Pesan Tanda Kasih ${data.name}`
+					// );
+					// mailData.append('from_name', data.name);
+					// mailData.append('replyto', 'gn.mailwork@gmail.com');
+					// mailData.append('Name', data.name);
+					// mailData.append('Nominal', data.nominal);
+					// mailData.append('Provider', data.provider);
+					// mailData.append('Nominal', data.nominal);
+					// mailData.append('Message', data.message);
+
+					// const object = Object.fromEntries(formData);
+
+					const storeMailBody = {
+						access_key: process.env.MAIL_TOKEN,
+						subject: `Pesan Tanda Kasih ${data.name}`,
+						from_name: data.name,
+						Name: data.name,
+						Nominal: data.nominal,
+						Provider: data.provider,
+						Nominal: data.nominal,
+						Message: data.message,
+						Publish: `https://app.contentful.com/spaces/rhcwjbd6frv6/entries/${queryGuestBook?.response?.sys?.id}`,
+					};
+
+					const queryMail = await queryRest({
+						url: 'https://api.web3forms.com/submit',
+						options: {
+							'method': 'POST',
+							'Content-Type': 'application/json',
+							'Accept': 'application/json',
+							'body': JSON.stringify(storeMailBody),
+						},
+					});
+
+					// setInfoProgress({
+					// 	status: statusQuery,
+					// 	message: `Terimakasih ${data.name} atas pesan tanda kasih nya. (Status Email : ${queryMail?.response?.message})`,
+					// });
+
+					setInfoProgress({
+						status: statusQuery,
+						message: `Terimakasih ${data.name} atas pesan tanda kasih nya.`,
+					});
+				} else {
+					setInfoProgress({
+						status: statusQuery || 400,
+						message:
+							queryGuestBook?.statusText ||
+							'Query contentful error',
+					});
+				}
+			} else {
+				setInfoProgress({
+					status: 500,
+					message: 'Somethings wrong with database',
+				});
+			}
+
+			console.log('queryGuestBook', queryGuestBook);
+		} catch (error) {
+			console.log('FormGuest error', error);
+			setInfoProgress({
+				status: 500,
+				message: 'Somethings wrong here',
+			});
+		}
+
+		setStateProgress(false);
 	}, []);
 
 	return (
@@ -143,12 +311,39 @@ export default function FormGuest({ title }) {
 				<div className={styles.field_submit}>
 					<button
 						type='submit'
+						disabled={stateProgress}
 						className={styles.cta_field_sumbit}>
 						Kirim Tanda Kasih
-						<IoHeartSharp />
+						{stateProgress ? (
+							<IoSyncOutline className='animate-spin' />
+						) : (
+							<IoHeartSharp />
+						)}
 					</button>
 				</div>
 			</form>
+			<PopupX
+				open={!isEmpty(infoProgress) && isObject(infoProgress)}
+				slotHeader={
+					<strong>
+						Status{' '}
+						{infoProgress.status > 199 && infoProgress.status < 300
+							? 'Success'
+							: 'Error'}
+					</strong>
+				}
+				closeHandler={() => {
+					if (
+						infoProgress.status > 199 &&
+						infoProgress.status < 300
+					) {
+						router.reload();
+					} else {
+						setInfoProgress({});
+					}
+				}}>
+				{infoProgress.message}
+			</PopupX>
 		</>
 	);
 }
