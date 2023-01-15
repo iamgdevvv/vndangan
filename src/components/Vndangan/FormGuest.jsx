@@ -167,7 +167,6 @@ export default function FormGuest({ title }) {
 						Name: data.name,
 						Nominal: data.nominal,
 						Provider: data.provider,
-						Nominal: data.nominal,
 						Message: data.message,
 						Publish: `https://app.contentful.com/spaces/rhcwjbd6frv6/entries/${queryGuestBook?.response?.sys?.id}`,
 					};
