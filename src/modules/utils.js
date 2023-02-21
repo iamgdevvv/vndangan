@@ -48,8 +48,8 @@ const userAgentDevices = (userAgent = '') => {
 };
 
 const nameMonthbyDate = (
-	locale = navigator?.language || 'id-ID',
 	date = new Date(),
+	locale = 'id-ID',
 	monthFormat = 'long'
 ) => {
 	return new Intl.DateTimeFormat(locale, { month: monthFormat }).format(date);

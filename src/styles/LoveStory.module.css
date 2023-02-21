@@ -1,41 +1,43 @@
 .title_love_stories {
-    @apply fsize-md mb-6px;
+	@apply fsize-md mb-6px;
 }
 
 .love_stories {
-    @apply flex flex-col;
+	@apply flex flex-col;
 
-    li {
-        @apply flexs;
-        @apply not-last: (mb-10px);
-        @apply even: (flex-row-reverse);
+	li {
+		@apply flexs;
+		@apply not-last: (mb-10px);
+		@apply even: (flex-row-reverse);
+		@apply <md: (items-stretch);
 
-        &:nth-child(even) {
-            .entry_love_story {
-                @apply text-right pr-20px pl-0;
-            }
-        }
-    }
+		&:nth-child(even) {
+			.entry_love_story {
+				@apply text-right pr-20px pl-0;
+			}
+		}
+	}
 
-    .thumb_love_story {
-        @apply w-80px;
+	.thumb_love_story {
+		@apply w-80px;
 
-        [class~='image-wrapper'] {
-            @apply aspect-square;
-        }
+		[class~='image-wrapper'] {
+			@apply aspect-square;
+			@apply <md: (sticky top-10px);
+		}
 
-        img {
-            @apply w-full h-full rounded-8px;
-        }
-    }
+		img {
+			@apply w-full h-full rounded-8px;
+		}
+	}
 
-    .entry_love_story {
-        @apply w-[calc(100%-80px)] pl-20px !leading-relaxed;
-        @apply md:(text-14px);
-        @apply <md:(text-12px);
-    }
+	.entry_love_story {
+		@apply w-[calc(100%-80px)] pl-20px !leading-relaxed;
+		@apply md: (text-14px);
+		@apply <md: (text-12px);
+	}
 
-    .date_love_story {
-        @apply block font-semibold mb-4px;
-    }
+	.date_love_story {
+		@apply block font-semibold mb-4px;
+	}
 }

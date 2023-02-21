@@ -9,7 +9,7 @@
 .popupx-inner {
     @apply relative z-2 w-full max-w-885px bg-white rounded-10px;
     @apply md: (p-40px);
-    @apply <md: (p-20px);
+    @apply <md: (p-20px pt-48px);
     animation: fadeIn 0.3s forwards;
 }
 
@@ -56,12 +56,10 @@
 }
 
 .close-popupx {
-    @apply absolute text-20px;
-    @apply md: (top-34px right-44px);
-    @apply <md: (top-20px right-20px);
+    @apply absolute text-20px top-20px right-20px;
     @apply hover: text-red-500;
 }
 
 .popupx-main {
-    @apply w-full mt-28px max-h-[calc(100%-28px)];
+    @apply w-full mt-28px max-h-[calc(100%-80px)];
 }

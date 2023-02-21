@@ -38,8 +38,9 @@
 	@apply mt-20px;
 
 	.cta_action_agenda {
-		@apply lg: (not-last:(mr-10px));
-		@apply <lg: (not-last:(mb-10px));
+		@apply min-w-180px;
+		@apply md: (not-last:(mr-10px));
+		@apply <md: (not-last:(mb-10px));
 
 		svg {
 			@apply ml-10px;

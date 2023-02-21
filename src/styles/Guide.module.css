@@ -11,7 +11,7 @@
 }
 
 .entry_guide {
-	@apply w-full mt-auto;
+	@apply w-full my-auto;
 
 	h2,
 	h3,

@@ -68,10 +68,12 @@ export default function FormGuest({ title }) {
 					'en-US': data.name,
 				},
 				donateNominal: {
-					'en-US': Number(data.nominal),
+					// 'en-US': Number(data.nominal),
+					'en-US': 10000,
 				},
 				donateProvider: {
-					'en-US': data.provider,
+					// 'en-US': data.provider,
+					'en-US': 'none'
 				},
 				message: {
 					'en-US': {
@@ -236,7 +238,7 @@ export default function FormGuest({ title }) {
 						{...register('name', { required: true })}
 					/>
 				</div>
-				<div
+				{/* <div
 					className={`${styles.field_rows} ${styles.field_rows_donate}`}>
 					<div
 						className={`${styles.field_col} ${
@@ -275,7 +277,7 @@ export default function FormGuest({ title }) {
 							{...register('nominal', { required: true })}
 						/>
 					</div>
-				</div>
+				</div> */}
 				<div
 					className={`${styles.field_input} ${
 						errors?.message ? styles.field_invalid : ''

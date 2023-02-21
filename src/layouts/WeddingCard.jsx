@@ -165,7 +165,7 @@ export default function WeddingCard({
 							</div>
 						</SplideSlide>
 					) : null}
-					{!isEmpty(guide) ? (
+					{/* {!isEmpty(guide) ? (
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
 								<h2 className={styles.title_wedding_card}>
@@ -174,7 +174,7 @@ export default function WeddingCard({
 								<Guide data={guide} />
 							</div>
 						</SplideSlide>
-					) : null}
+					) : null} */}
 				</SplideTrack>
 				<div className='splide__arrows'>
 					<button

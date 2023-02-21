@@ -1,6 +1,12 @@
 import xss from 'xss';
 import { isEmpty, isObject } from 'validate.js';
-import { BiAlarm, BiCalendar, BiMap, BiCalendarPlus } from 'react-icons/bi';
+import {
+	BiNavigation,
+	BiAlarm,
+	BiCalendar,
+	BiMap,
+	BiCalendarPlus,
+} from 'react-icons/bi';
 import {
 	number2digits,
 	stringCapitalize,
@@ -52,8 +58,10 @@ export default function Agenda({
 			if (!isEmpty(data?.dateEnd)) {
 				const getDateEnd = printDate(data?.dateEnd);
 
-				if( getDateEnd !== getDataDate ) {
-					getDataDate = `${getDataDate} - ${printDate(data?.dateEnd)}`;
+				if (getDateEnd !== getDataDate) {
+					getDataDate = `${getDataDate} - ${printDate(
+						data?.dateEnd
+					)}`;
 				}
 			}
 		}
@@ -81,6 +89,20 @@ export default function Agenda({
 		}
 
 		return `https://maps.google.com/maps?z=14&hl=id&q=${queryAddress}&output=embed`;
+	}, [data]);
+
+	const urlDirecctionAddress = useMemo(() => {
+		let queryAddress = !isEmpty(dataAddress) ? escapeHtml(dataAddress) : '';
+
+		if (
+			isObject(data?.location) &&
+			data?.location?.lat &&
+			data?.location?.lon
+		) {
+			queryAddress = `${data.location.lat},${data.location.lon}`;
+		}
+
+		return `https://www.google.com/maps/dir/Current+Location/${queryAddress}`;
 	}, [data]);
 
 	const urlCalendar = useMemo(() => {
@@ -183,6 +205,19 @@ export default function Agenda({
 				</div>
 			</div>
 			<PopupX
+				slotHeader={
+					<div className='flexs justify-between'>
+						<h4 className='mb-0 text-22px leading-normal'>{titleAgenda}</h4>
+						<a
+							href={urlDirecctionAddress}
+							target='_blank'
+							rel='noopener noreferrer'
+							className='cta-primary'>
+							Navigasi Vanue
+							<BiNavigation className='ml-10px text-20px' />
+						</a>
+					</div>
+				}
 				open={popupMap}
 				closeHandler={() => setPopupMap(false)}
 				className='popup-map'>
