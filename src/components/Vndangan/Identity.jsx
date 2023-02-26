@@ -51,13 +51,13 @@ export default function Identity({ data = {}, name }) {
 			</div>
 			<div className={styles.brides_wedding_identity}>
 				<span className={styles.brides_identity_sublabel}>
-					Mempelai Pria
+					Mempelai Wanita
 				</span>
 				<span className={styles.brides_identity_name}>
 					{data.brideName}
 				</span>
 				<span className={styles.brides_identity_parents}>
-					Putra dari Bapak {data.brideFatherName} dan Ibu{' '}
+					Putri dari Bapak {data.brideFatherName} dan Ibu{' '}
 					{data.brideMotherName}.
 				</span>
 			</div>
