@@ -19,12 +19,12 @@ import { useRouter } from 'next/router';
 
 const playlists = [
 	{
-		title: "Can't Help Falling in Love - Kina Grannis",
-		src: 'cant-help-falling-in-love.mp3',
+		title: 'Minang Instrument Welcome',
+		src: 'minang-instrument-welcome.mp3',
 	},
 	{
-		title: 'Tak Ingin Kau Pergi - Angga Jippy',
-		src: 'tak-igin-kau-pergi.mp3',
+		title: "Can't Help Falling in Love - Kina Grannis",
+		src: 'cant-help-falling-in-love.mp3',
 	},
 ];
 

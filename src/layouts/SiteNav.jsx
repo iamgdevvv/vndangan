@@ -49,13 +49,13 @@ const navigation = [
 		slug: 'buku-tamu-tanda-kasih',
 		default: false,
 	},
-	{
-		id: 6,
-		icon: 'BiHelpCircle',
-		title: 'Panduan & Protokol',
-		slug: 'panduan-protokol',
-		default: false,
-	},
+	// {
+	// 	id: 6,
+	// 	icon: 'BiHelpCircle',
+	// 	title: 'Panduan & Protokol',
+	// 	slug: 'panduan-protokol',
+	// 	default: false,
+	// },
 ];
 
 export default function SiteNav({ className = '' }) {

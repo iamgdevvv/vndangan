@@ -35,7 +35,9 @@
 	}
 
 	&>[class~='splide__arrows'] {
-		@apply absolute bottom-40px left-0 w-full h-48px flexs-center;
+		@apply absolute left-0 w-full h-48px flexs-center;
+		@apply md:bottom-40px;
+		@apply <md:bottom-28px;
 
 		[class~='splide__arrow'] {
 			@apply static w-48px h-full rounded-6px shadow shadow-zinc-200 text-20px opacity-100 bg-teal-50 text-teal-400 transform-none;
