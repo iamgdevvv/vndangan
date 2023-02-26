@@ -2,7 +2,7 @@ import queryRest from '@modules/query-rest';
 import { isEmpty } from 'validate.js';
 
 export default async function handler(req, res) {
-	res.setHeader('Cache-Control', 's-maxage=3600');
+	// res.setHeader('Cache-Control', 's-maxage=3600');
 
 	const getAssetIds = req?.query?.ids ?? '';
 

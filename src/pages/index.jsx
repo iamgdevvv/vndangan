@@ -88,10 +88,10 @@ export default function Home({
 }
 
 export async function getServerSideProps({ req, res, query }) {
-	res.setHeader(
-		'Cache-Control',
-		'public, s-maxage=3600, stale-while-revalidate=59'
-	);
+	// res.setHeader(
+	// 	'Cache-Control',
+	// 	'public, s-maxage=3600, stale-while-revalidate=59'
+	// );
 
 	const { HOST_URL, CFL_URI, CFL_COUPLE_ID, CFL_TOKEN } = process.env;
 	const { name } = query;
