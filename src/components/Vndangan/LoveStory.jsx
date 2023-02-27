@@ -1,11 +1,11 @@
+import { useMemo } from 'react';
 import { isArray, isEmpty } from 'validate.js';
-import { printDate } from '@modules/utils';
-import ImageVN from '@components/ImageVN';
-import styles from '@styles/LoveStory.module.css';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import xss from 'xss';
-import { useMemo } from 'react';
+
+import { printDate } from '@modules/utils';
 import ImageCF from '@components/ImageCF';
+import styles from '@styles/LoveStory.module.css';
 
 export default function LoveStory({ title, data = [] }) {
 	const dataStories = useMemo(() => {
@@ -30,6 +30,8 @@ export default function LoveStory({ title, data = [] }) {
 					<li key={`item-${index}`}>
 						<ImageCF
 							id={story?.fields?.media?.sys?.id}
+							height={160}
+							width={160}
 							className={styles.thumb_love_story}
 						/>
 						<div className={styles.entry_love_story}>

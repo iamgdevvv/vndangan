@@ -1,13 +1,9 @@
-import { useCallback, useMemo } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import Select from 'react-select';
-import ReCAPTCHA from 'react-google-recaptcha';
-import dataProvider from '@data/provider-payment.json';
-import ImageVN from '@components/ImageVN';
+import { isEmpty, isFunction } from 'validate.js';
+
 import styles from '@styles/FormInvite.module.css';
-import { isEmpty } from 'validate.js';
-import { useState } from 'react';
 
 export default function FormInvite({ title, defaultName, submitName }) {
 	const {
@@ -28,9 +24,10 @@ export default function FormInvite({ title, defaultName, submitName }) {
 	}, []);
 
 	const onSubmit = useCallback((data) => {
-		console.log(data);
-		submitName(data.name);
-	}, []);
+		if (isFunction(submitName)) {
+			submitName(data.name);
+		}
+	}, [submitName]);
 
 	return (
 		<>

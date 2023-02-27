@@ -1,8 +1,10 @@
-import queryRest from '@modules/query-rest';
 import { isEmpty } from 'validate.js';
+import cache from 'memory-cache-pro';
+
+import queryRest from '@modules/query-rest';
 
 export default async function handler(req, res) {
-	// res.setHeader('Cache-Control', 's-maxage=3600');
+	res.setHeader('Cache-Control', 's-maxage=3600');
 
 	const getAssetIds = req?.query?.ids ?? '';
 
@@ -17,15 +19,24 @@ export default async function handler(req, res) {
 	const contentfulAssets = [];
 
 	try {
-		assetIds.map(async (assetId) => {
-			if (!isEmpty(assetId)) {
-				const queryAsset = await queryRest({
-					url: `${CFL_URI}/assets/${assetId}?access_token=${CFL_TOKEN}`,
-				});
+		await Promise.all(
+			assetIds.map(async (assetId) => {
+				if (!isEmpty(assetId)) {
+					if (isEmpty(cache.get(assetId))) {
+						const queryAsset = await queryRest({
+							url: `${CFL_URI}/assets/${assetId}?access_token=${CFL_TOKEN}`,
+						});
 
-				contentfulAssets.push(queryAsset?.response?.fields);
-			}
-		});
+						if (queryAsset) {
+							contentfulAssets.push(queryAsset?.response?.fields);
+							cache.put(assetId, queryAsset?.response?.fields);
+						}
+					} else {
+						contentfulAssets.push(cache.get(assetId));
+					}
+				}
+			})
+		);
 	} catch (err) {
 		res.status(500).json({ ...err });
 	}

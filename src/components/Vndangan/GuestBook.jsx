@@ -1,9 +1,10 @@
-import ImageVN from '@components/ImageVN';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useMemo } from 'react';
-import { isArray, isEmpty } from 'validate.js';
-import styles from '@styles/Gallery.module.css';
 import xss from 'xss';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { isArray, isEmpty } from 'validate.js';
+
+import ImageVN from '@components/ImageVN';
+import styles from '@styles/Gallery.module.css';
 
 export default function GuestBook({ data = [] }) {
 	const confGallerySplide = useMemo(() => {

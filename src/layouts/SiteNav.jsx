@@ -1,5 +1,4 @@
-import { useMemo } from 'react';
-import Link from 'next/link';
+import { useMemo, useEffect, useState } from 'react';
 import {
 	BiHomeHeart,
 	BiStoreAlt,
@@ -8,10 +7,9 @@ import {
 	BiBookReader,
 	BiHelpCircle,
 } from 'react-icons/bi';
-import styles from '@styles/SiteNav.module.css';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { isDefined } from 'validate.js';
+
+import styles from '@styles/SiteNav.module.css';
 
 const navigation = [
 	{
@@ -70,7 +68,7 @@ export default function SiteNav({ className = '' }) {
 			BiBookReader: <BiBookReader />,
 			BiHelpCircle: <BiHelpCircle />,
 		};
-	}, [navigation]);
+	}, []);
 
 	useEffect(() => {
 		if (isDefined(window)) {

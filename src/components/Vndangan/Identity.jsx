@@ -1,10 +1,9 @@
+import { useEffect, useState, useCallback } from 'react';
+import { isEmpty, isObject } from 'validate.js';
+
 import ImageCF from '@components/ImageCF';
-import ImageVN from '@components/ImageVN';
 import queryRest from '@modules/query-rest';
 import styles from '@styles/Identity.module.css';
-import { useEffect } from 'react';
-import { useState, useCallback } from 'react';
-import { isEmpty, isObject } from 'validate.js';
 
 export default function Identity({ data = {}, name }) {
 	const [avatarIdentity, setAvatarIdentity] = useState({});

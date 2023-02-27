@@ -1,9 +1,9 @@
-import { isArray, isEmpty, isObject } from 'validate.js';
-import ImageVN from '@components/ImageVN';
-import styles from '@styles/Guide.module.css';
-import ImageCF from '@components/ImageCF';
+import { isEmpty, isObject } from 'validate.js';
 import xss from 'xss';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+
+import ImageCF from '@components/ImageCF';
+import styles from '@styles/Guide.module.css';
 
 export default function Guide({ data, title }) {
 	if (isEmpty(data) || !isObject(data)) {

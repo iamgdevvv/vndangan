@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import xss from 'xss';
-import { isObject, isArray, isEmpty } from 'validate.js';
+import { isArray, isEmpty } from 'validate.js';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import '@splidejs/react-splide/css';
+
 import ImageVN from '@components/ImageVN';
 import Agenda from '@components/Vndangan/Agenda';
 import styles from '@styles/SiteBanner.module.css';
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import queryRest from '@modules/query-rest';
 
 export default function SiteBanner({
 	couple = {},

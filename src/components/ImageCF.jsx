@@ -1,9 +1,8 @@
-import queryRest from '@modules/query-rest';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
-import { useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { isEmpty } from 'validate.js';
-import ImageVN from './ImageVN';
+
+import queryRest from '@modules/query-rest';
+import ImageVN from '@components/ImageVN';
 
 export default function ImageCF({ id, width, height, alt, className = '' }) {
 	const [thumbnail, setThumbnail] = useState({});
@@ -18,10 +17,14 @@ export default function ImageCF({ id, width, height, alt, className = '' }) {
 				url: `/api/contentful/assets/${id}`,
 			});
 
-			setThumbnail(queryThumbnail?.response[0]);
+			if (queryThumbnail) {
+				setThumbnail(queryThumbnail?.response[0]);
+			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
+
+		return true;
 	}, [id]);
 
 	useEffect(() => {

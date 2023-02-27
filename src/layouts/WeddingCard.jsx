@@ -2,18 +2,19 @@ import { useMemo } from 'react';
 import { isArray, isDefined, isEmpty } from 'validate.js';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+
 import ImageVN from '@components/ImageVN';
 import Agenda from '@components/Vndangan/Agenda';
 import Identity from '@components/Vndangan/Identity';
 import LoveStory from '@components/Vndangan/LoveStory';
 import Gallery from '@components/GalleryCF';
 import BrideGroom from '@components/Vndangan/BrideGroom';
-import styles from '@styles/WeddingCard.module.css';
 import { printCurrency } from '@modules/utils';
 import FormGuest from '@components/Vndangan/FormGuest';
-import Guide from '@components/Vndangan/Guide';
+// import Guide from '@components/Vndangan/Guide';
 import GuestBook from '@components/Vndangan/GuestBook';
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import styles from '@styles/WeddingCard.module.css';
 
 export default function WeddingCard({
 	couple = {},
@@ -118,6 +119,7 @@ export default function WeddingCard({
 								{agenda.map((itemAgenda) => (
 									<Agenda
 										data={itemAgenda?.fields}
+										couple={couple}
 										key={itemAgenda.sys.id}
 									/>
 								))}
@@ -127,7 +129,9 @@ export default function WeddingCard({
 					{!isEmpty(gallery) || !isEmpty(loveStories) ? (
 						<SplideSlide>
 							<div className={styles.item_wedding_card}>
-								<h2 className={styles.title_wedding_card}>{couple?.titleStoryGallery}</h2>
+								<h2 className={styles.title_wedding_card}>
+									{couple?.titleStoryGallery}
+								</h2>
 								<Gallery data={gallery} />
 								<LoveStory
 									data={loveStories}

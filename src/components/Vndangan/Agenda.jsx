@@ -1,3 +1,5 @@
+import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import xss from 'xss';
 import { isEmpty, isObject } from 'validate.js';
 import {
@@ -7,6 +9,8 @@ import {
 	BiMap,
 	BiCalendarPlus,
 } from 'react-icons/bi';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+
 import {
 	number2digits,
 	stringCapitalize,
@@ -14,12 +18,8 @@ import {
 	printDate,
 	printTime,
 } from '@modules/utils';
+import PopupX from '@components/PopupX';
 import styles from '@styles/Agenda.module.css';
-import Link from 'next/link';
-import { useMemo } from 'react';
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import { useState } from 'react';
-import PopupX from '../PopupX';
 
 export default function Agenda({
 	data = {},
@@ -29,9 +29,10 @@ export default function Agenda({
 }) {
 	const [popupMap, setPopupMap] = useState(false);
 
-	const titleAgenda = useMemo(() => {
-		return stringCapitalize(title || data?.title);
-	}, [title, data]);
+	const titleAgenda = useMemo(
+		() => stringCapitalize(title || data?.title),
+		[title, data]
+	);
 
 	const dataTime = useMemo(() => {
 		let getDataTime = '';
@@ -89,7 +90,7 @@ export default function Agenda({
 		}
 
 		return `https://maps.google.com/maps?z=14&hl=id&q=${queryAddress}&output=embed`;
-	}, [data]);
+	}, [data, dataAddress]);
 
 	const urlDirecctionAddress = useMemo(() => {
 		let queryAddress = !isEmpty(dataAddress) ? escapeHtml(dataAddress) : '';
@@ -103,7 +104,7 @@ export default function Agenda({
 		}
 
 		return `https://www.google.com/maps/dir/Current+Location/${queryAddress}`;
-	}, [data]);
+	}, [data, dataAddress]);
 
 	const urlCalendar = useMemo(() => {
 		const calendarStart = new Date(data?.dateStart);
@@ -127,17 +128,19 @@ export default function Agenda({
 		}
 
 		return `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${calendarDate}&details=Undangan ${escapeHtml(
-			couple.title
+			couple.identifier
 		)} %0A${dataAddress} pada ${dataDate} dengan waktu ${dataTime}. %0A %0A${xss(
 			couple.description
-		)}&location=${dataAddress}&text=Undangan ${titleAgenda} ${escapeHtml(
-			couple.title
+		)}&location=${escapeHtml(dataAddress)}&text=Undangan ${titleAgenda} ${escapeHtml(
+			couple.identifier
 		)}`;
-	}, [data, couple]);
+	}, [data, couple, dataAddress, dataDate, dataTime, titleAgenda]);
 
 	if (!isObject(data)) {
 		return null;
 	}
+
+	console.log('couple', couple);
 
 	return (
 		<>
@@ -207,7 +210,9 @@ export default function Agenda({
 			<PopupX
 				slotHeader={
 					<div className='flexs justify-between'>
-						<h4 className='mb-0 text-22px leading-normal'>{titleAgenda}</h4>
+						<h4 className='mb-0 text-22px leading-normal'>
+							{titleAgenda}
+						</h4>
 						<a
 							href={urlDirecctionAddress}
 							target='_blank'
@@ -223,7 +228,7 @@ export default function Agenda({
 				className='popup-map'>
 				<iframe
 					title={`Agenda ${titleAgenda}`}
-					frameborder='0'
+					frameBorder='0'
 					src={urlAddress}
 				/>
 			</PopupX>

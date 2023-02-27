@@ -1,14 +1,15 @@
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { isArray, isEmpty } from 'validate.js';
+
 import { useSiteContext } from '@contexts/SiteContext';
 import queryRest from '@modules/query-rest';
 import SiteNav from '@layouts/SiteNav';
 import SiteBanner from '@layouts/SiteBanner';
 import WeddingCard from '@layouts/WeddingCard';
-import styles from '@styles/Vndangan.module.css';
-import { useState } from 'react';
 import FormInvite from '@components/Vndangan/FormInvite';
-import { isArray, isEmpty } from 'validate.js';
+import styles from '@styles/Vndangan.module.css';
 
 const SiteAudioDynamic = dynamic(() => import('@layouts/SiteAudio'), {
 	ssr: false,
@@ -87,13 +88,13 @@ export default function Home({
 	);
 }
 
-export async function getServerSideProps({ req, res, query }) {
-	// res.setHeader(
-	// 	'Cache-Control',
-	// 	'public, s-maxage=3600, stale-while-revalidate=59'
-	// );
+export async function getServerSideProps({ res, query }) {
+	res.setHeader(
+		'Cache-Control',
+		'public, s-maxage=3600, stale-while-revalidate=59'
+	);
 
-	const { HOST_URL, CFL_URI, CFL_COUPLE_ID, CFL_TOKEN } = process.env;
+	const { CFL_URI, CFL_COUPLE_ID, CFL_TOKEN } = process.env;
 	const { name } = query;
 
 	let responseCouple = [];
@@ -113,8 +114,11 @@ export async function getServerSideProps({ req, res, query }) {
 	try {
 		const getGalleryAsset = [];
 
-		if (responseCouple?.gallery) {
-			responseCouple?.gallery.map(async (itemGallery) => {
+		if (
+			!isEmpty(responseCouple?.gallery) &&
+			isArray(responseCouple.gallery)
+		) {
+			responseCouple.gallery.map(async (itemGallery) => {
 				if (!isEmpty(itemGallery?.sys?.id)) {
 					const queryGalleryAsset = await queryRest({
 						url: `${CFL_URI}/assets/${itemGallery.sys.id}?access_token=${CFL_TOKEN}`,
@@ -186,16 +190,6 @@ export async function getServerSideProps({ req, res, query }) {
 	let responseGuestBook = [];
 
 	try {
-		const guestBookIds =
-			responseCouple?.guestBook?.map((guestBook) => guestBook.sys.id) ||
-			[];
-
-		// const queryGuestBook = await queryRest({
-		// 	url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=guestBook&sys.id[in]=${guestBookIds.join(
-		// 		','
-		// 	)}`,
-		// });
-
 		const queryGuestBook = await queryRest({
 			url: `${CFL_URI}/entries/?access_token=${CFL_TOKEN}&content_type=guestBook`,
 		});

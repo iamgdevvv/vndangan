@@ -26,7 +26,7 @@
 		@apply absolute top-4px left-0 z-4 w-full h-full;
 
 		[class~="splide__arrow"] {
-			@apply absolute top-0 left-0 w-1/2 h-full opacity-0 transform-none;
+			@apply absolute top-0 left-0 w-1/2 h-full rounded-none opacity-0 transform-none;
 
 			&[class~="splide__arrow--next"] {
 				@apply left-1/2;

@@ -52,6 +52,11 @@ export default function VndanganApp({
 }
 
 VndanganApp.getInitialProps = async (appContext) => {
+	if (appContext?.ctx?.res.statusCode === 404) {
+		appContext?.ctx?.res.writeHead(301, { Location: '/' });
+		appContext?.ctx?.res.end();
+	}
+
 	const appProps = await App.getInitialProps(appContext);
 	const { HOST_URL } = process.env;
 

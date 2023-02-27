@@ -1,24 +1,18 @@
-import { useMemo } from 'react';
-import { useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { isArray, isEmpty } from 'validate.js';
-import styles from '@styles/BrideGroom.module.css';
+
 import ImageVN from '@components/ImageVN';
+import styles from '@styles/BrideGroom.module.css';
 
 export default function BrideGroom({ data = [] }) {
 	const dataType = useCallback(
-		(type) => {
-			return data.filter((item) => item.type === type);
-		},
+		(type) => data.filter((item) => item.type === type),
 		[data]
 	);
 
-	const dataGroom = useMemo(() => {
-		return dataType('groom');
-	}, [dataType]);
+	const dataGroom = useMemo(() => dataType('groom'), [dataType]);
 
-	const dataBride = useMemo(() => {
-		return dataType('bride');
-	}, [dataType]);
+	const dataBride = useMemo(() => dataType('bride'), [dataType]);
 
 	if (isEmpty(data) || !isArray(data)) {
 		return null;
@@ -30,8 +24,8 @@ export default function BrideGroom({ data = [] }) {
 				<div className={styles.item_bridegroom}>
 					<h3 className={styles.title_bridegroom}>groomsman</h3>
 					<ul className={styles.lists_bridegroom}>
-						{dataGroom.map((item, index) => (
-							<li key={`item-${index}`}>
+						{dataGroom.map((item) => (
+							<li key={item.name}>
 								<ImageVN
 									src={`/images/${item.avatar}`}
 									parentClass={styles.thumb_bridegroom}
@@ -48,8 +42,8 @@ export default function BrideGroom({ data = [] }) {
 				<div className={styles.item_bridegroom}>
 					<h3 className={styles.title_bridegroom}>bridesmaid</h3>
 					<ul className={styles.lists_bridegroom}>
-						{dataBride.map((item, index) => (
-							<li key={`item-${index}`}>
+						{dataBride.map((item) => (
+							<li key={item.name}>
 								<ImageVN
 									src={`/images/${item.avatar}`}
 									parentClass={styles.thumb_bridegroom}

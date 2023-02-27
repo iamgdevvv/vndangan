@@ -1,19 +1,16 @@
-import ImageVN from '@components/ImageVN';
+import { useMemo, useState } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { useMemo } from 'react';
 import { isArray, isEmpty } from 'validate.js';
-import styles from '@styles/Gallery.module.css';
-import { useState } from 'react';
 import PopupX from '@components/PopupX';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
-import queryRest from '@modules/query-rest';
+import ImageVN from '@components/ImageVN';
+
+import styles from '@styles/Gallery.module.css';
 
 export default function Gallery({ data = [] }) {
 	const [popupGallery, setPopupGallery] = useState(false);
 
-	const confGallerySplide = useMemo(() => {
-		return {
+	const confGallerySplide = useMemo(
+		() => ({
 			type: 'slide',
 			perPage: 1,
 			rewind: true,
@@ -23,8 +20,9 @@ export default function Gallery({ data = [] }) {
 			arrows: false,
 			pagination: true,
 			gap: '10px',
-		};
-	}, []);
+		}),
+		[]
+	);
 
 	if (isEmpty(data) || !isArray(data)) {
 		return null;
@@ -36,7 +34,7 @@ export default function Gallery({ data = [] }) {
 				options={confGallerySplide}
 				className={styles.gallery_wedding}>
 				{data.map((asset, index) => (
-					<SplideSlide key={`image-${index}`}>
+					<SplideSlide key={asset?.file?.url}>
 						<div className={styles.gallery_wedding_item}>
 							<ImageVN
 								src={`https:${asset?.file?.url}`}

@@ -21,6 +21,7 @@
 		"eslint-plugin-jsx-a11y": "^6.6.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-unused-imports": "^2.0.0",
+		"memory-cache-pro": "^1.1.0",
 		"next": "^13.0.0",
 		"next-progress": "^2.2.0",
 		"nope-validator": "^1.0.4",

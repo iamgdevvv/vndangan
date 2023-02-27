@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 
 export default function handler(req, res) {
+	res.setHeader('Cache-Control', 's-maxage=3600');
+
 	const dirRelativeToPublicFolder = req?.query?.dir ?? '';
 
 	try {

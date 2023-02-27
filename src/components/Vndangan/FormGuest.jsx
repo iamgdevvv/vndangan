@@ -1,17 +1,16 @@
-import { useCallback, useMemo } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useCallback, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 import { IoHeartSharp, IoSyncOutline } from 'react-icons/io5';
-import Select from 'react-select';
+// import Select from 'react-select';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { isEmpty, isObject } from 'validate.js';
+
+import queryRest from '@modules/query-rest';
 import dataProvider from '@data/provider-payment.json';
 import ImageVN from '@components/ImageVN';
-import styles from '@styles/FormGuest.module.css';
-import { isEmpty, isObject } from 'validate.js';
-import queryRest from '@modules/query-rest';
-import { useState } from 'react';
 import PopupX from '@components/PopupX';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import styles from '@styles/FormGuest.module.css';
 
 export default function FormGuest({ title }) {
 	const router = useRouter();
@@ -57,7 +56,6 @@ export default function FormGuest({ title }) {
 
 	const onSubmit = useCallback(async (data) => {
 		setStateProgress(true);
-		console.log(data);
 
 		const storeGuessBook = {
 			fields: {
@@ -146,21 +144,6 @@ export default function FormGuest({ title }) {
 				const statusQuery = queryGuestBook?.status;
 
 				if (statusQuery > 199 && statusQuery < 300) {
-					// const mailData = new FormData();
-					// mailData.append('access_key', process.env.MAIL_TOKEN);
-					// mailData.append(
-					// 	'subject',
-					// 	`Pesan Tanda Kasih ${data.name}`
-					// );
-					// mailData.append('from_name', data.name);
-					// mailData.append('replyto', 'gn.mailwork@gmail.com');
-					// mailData.append('Name', data.name);
-					// mailData.append('Nominal', data.nominal);
-					// mailData.append('Provider', data.provider);
-					// mailData.append('Nominal', data.nominal);
-					// mailData.append('Message', data.message);
-
-					// const object = Object.fromEntries(formData);
 
 					const storeMailBody = {
 						access_key: process.env.MAIL_TOKEN,
@@ -183,11 +166,6 @@ export default function FormGuest({ title }) {
 						},
 					});
 
-					// setInfoProgress({
-					// 	status: statusQuery,
-					// 	message: `Terimakasih ${data.name} atas pesan tanda kasih nya. (Status Email : ${queryMail?.response?.message})`,
-					// });
-
 					setInfoProgress({
 						status: statusQuery,
 						message: `Terimakasih ${data.name} atas pesan tanda kasih nya.`,
@@ -206,10 +184,8 @@ export default function FormGuest({ title }) {
 					message: 'Somethings wrong with database',
 				});
 			}
-
-			console.log('queryGuestBook', queryGuestBook);
 		} catch (error) {
-			console.log('FormGuest error', error);
+			console.error('FormGuest error', error);
 			setInfoProgress({
 				status: 500,
 				message: 'Somethings wrong here',

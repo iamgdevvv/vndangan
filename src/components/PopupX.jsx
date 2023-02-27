@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Popup from 'reactjs-popup';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-import styles from '@styles/PopupX.module.css';
 import { isFunction } from 'validate.js';
-import { useCallback } from 'react';
+
+import styles from '@styles/PopupX.module.css';
 
 function PopupX({
 	open,
@@ -18,7 +18,7 @@ function PopupX({
 	const handlerClose = useCallback(() => {
 		setIsClosing(true);
 		if (isFunction(closeHandler)) {
-			const delayClose = setTimeout(function () {
+			const delayClose = setTimeout(() => {
 				closeHandler();
 				setIsClosing(false);
 			}, 300);
@@ -27,6 +27,8 @@ function PopupX({
 				clearInterval(delayClose);
 			};
 		}
+
+		return true;
 	}, [closeHandler]);
 
 	return (
