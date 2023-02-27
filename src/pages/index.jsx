@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { isArray, isEmpty } from 'validate.js';
@@ -33,10 +33,84 @@ export default function Home({
 	const [nameInvite, setNameInvite] = useState(name);
 	const [togglePopupInvite, setTogglePopupInvite] = useState(true);
 
+	const [avatarIdentity, setAvatarIdentity] = useState({});
+
+	const fetchAvatarIdentity = useCallback(async () => {
+		try {
+			const queryAvatarAsset = await queryRest({
+				url: `/api/contentful/assets/${couple.thumbnail.sys.id}`,
+			});
+
+			if (
+				queryAvatarAsset &&
+				!isEmpty(queryAvatarAsset?.response) &&
+				isArray(queryAvatarAsset?.response)
+			) {
+				setAvatarIdentity(queryAvatarAsset?.response[0]);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}, [couple]);
+
+	useEffect(() => {
+		fetchAvatarIdentity();
+	}, [fetchAvatarIdentity]);
+
 	return (
 		<>
 			<Head>
-				<title>Grafis Mutia - Wedding Inviteation</title>
+				<title>{`${couple.identifier} - Undangan Pernikahan`}</title>
+				<meta
+					name='title'
+					content={`${couple.identifier} - Undangan Pernikahan`}
+				/>
+				<meta
+					name='description'
+					content={`Undangan Pernikahan Grafis Nuresa (Putra dari Bapak ${couple.groomFatherName} dan Ibu ${couple.groomMotherName}) dan Mutia Maighina Evson (Putri dari Bapak ${couple.brideFatherName} dan Ibu ${couple.brideMotherName})`}
+				/>
+
+				<meta
+					property='og:type'
+					content='website'
+				/>
+				<meta
+					property='og:url'
+					content={process.env.HOST_URL}
+				/>
+				<meta
+					property='og:title'
+					content={`${couple.identifier} - Undangan Pernikahan`}
+				/>
+				<meta
+					property='og:description'
+					content={`Undangan Pernikahan Grafis Nuresa (Putra dari Bapak ${couple.groomFatherName} dan Ibu ${couple.groomMotherName}) dan Mutia Maighina Evson (Putri dari Bapak ${couple.brideFatherName} dan Ibu ${couple.brideMotherName})`}
+				/>
+				<meta
+					property='og:image'
+					content={avatarIdentity?.file?.url || '/images/thumbnail-branding.jpg'}
+				/>
+
+				<meta
+					property='twitter:card'
+					content='summary_large_image'
+				/>
+				<meta
+					property='twitter:url'
+					content={process.env.HOST_URL}
+				/>
+				<meta
+					property='twitter:title'
+					content={`${couple.identifier} - Undangan Pernikahan`}
+				/>
+				<meta
+					property='twitter:description'
+					content={`Undangan Pernikahan Grafis Nuresa (Putra dari Bapak ${couple.groomFatherName} dan Ibu ${couple.groomMotherName}) dan Mutia Maighina Evson (Putri dari Bapak ${couple.brideFatherName} dan Ibu ${couple.brideMotherName})`}
+				/>
+				<meta
+					property='twitter:image'
+					content={avatarIdentity?.file?.url || '/images/thumbnail-branding.jpg'}
+				/>
 			</Head>
 			<SiteAudioDynamic />
 			<main className={`site-main ${styles.site_main_vndangan}`}>

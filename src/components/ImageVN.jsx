@@ -10,12 +10,13 @@ export default function ImageVN({
 	src,
 	width,
 	height,
+	alt,
 	..._props
 }) {
 	let imageType = 'figure-native';
 	let elImage = (
 		<img
-			alt=''
+			alt={alt}
 			src={src}
 			loading='lazy'
 			{..._props}
@@ -30,7 +31,7 @@ export default function ImageVN({
 				src={src}
 				width={width}
 				height={height}
-				alt=''
+				alt={alt}
 				{..._props}
 			/>
 		);

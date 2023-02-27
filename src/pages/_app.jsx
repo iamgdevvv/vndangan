@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import App from 'next/app';
 import Head from 'next/head';
+import Script from 'next/script';
 import NextProgress from 'next-progress';
 import { SiteProvider } from '@contexts/SiteContext';
 import { faviconAssets, userAgentDevices } from '@modules/utils';
@@ -16,21 +17,19 @@ export default function VndanganApp({
 }) {
 	const { favicons } = internal;
 
-	const dataFavicons = useMemo(() => {
-		return faviconAssets(favicons);
-	}, [favicons]);
+	const dataFavicons = useMemo(() => faviconAssets(favicons), [favicons]);
 
 	return (
 		<SiteProvider data={siteProps}>
 			<Head>
-				<title>Vndangan</title>
-				<meta
-					name='description'
-					content='Sebar undangan untuk sebar kabar bahagia'
-				/>
+				<title>Grafis Mutia - Undangan Pernikahan</title>
 				<meta
 					name='robots'
 					content='noindex, nofollow'
+				/>
+				<meta
+					name='viewport'
+					content='initial-scale=1, width=device-width'
 				/>
 				{dataFavicons.map((favicon) => {
 					return (
@@ -41,6 +40,21 @@ export default function VndanganApp({
 					);
 				})}
 			</Head>
+			{/* Google tag (gtag.js) */}
+			<Script
+				id='googletagmanager'
+				strategy='lazyOnload'
+				src='https://www.googletagmanager.com/gtag/js?id=G-0WY86M2LVK'
+			/>
+			<Script
+				strategy='lazyOnload'
+				id='gtag'>
+				{`window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+
+				gtag('config', 'G-0WY86M2LVK');`}
+			</Script>
 			<div
 				id='site'
 				className='site site-vndangan'>
