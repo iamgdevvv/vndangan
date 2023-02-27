@@ -53,7 +53,7 @@ export default function SiteBanner({
 								src={`https:${asset?.file?.url}`}
 								width={asset?.file?.details?.image?.width}
 								height={asset?.file?.details?.image?.height}
-								alt={asset?.description}
+								alt={asset?.description || asset?.title || ''}
 							/>
 						</SplideSlide>
 					))}

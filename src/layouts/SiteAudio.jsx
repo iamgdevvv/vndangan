@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { isDefined } from 'validate.js';
 import {
 	BiPlayCircle,
 	BiPauseCircle,
@@ -10,12 +12,8 @@ import {
 } from 'react-icons/bi';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { isDefined } from 'validate.js';
-import { useState } from 'react';
-import { createRef } from 'react';
-import { useCallback } from 'react';
+
 import styles from '@styles/SiteAudio.module.css';
-import { useRouter } from 'next/router';
 
 const playlists = [
 	{
@@ -30,7 +28,7 @@ const playlists = [
 
 export default function SiteAudio({ className = '' }) {
 	const router = useRouter();
-	const audioRef = createRef();
+	const audioRef = useRef();
 	const [toggleAudio, setToggleAudio] = useState(false);
 	const [autoPlay, setAutoPlay] = useState(true);
 	const [playlist, setPlaylist] = useState(0);

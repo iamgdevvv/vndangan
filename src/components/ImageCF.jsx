@@ -31,12 +31,16 @@ export default function ImageCF({ id, width, height, alt, className = '' }) {
 		fetchThumbnail();
 	}, [fetchThumbnail]);
 
+	if (isEmpty(thumbnail?.file?.url)) {
+		return null;
+	}
+
 	return (
 		<ImageVN
 			src={`https:${thumbnail?.file?.url}`}
 			height={height || thumbnail?.file?.details?.image?.height}
 			width={width || thumbnail?.file?.details?.image?.width}
-			alt={alt || thumbnail?.description}
+			alt={alt || thumbnail?.description || thumbnail?.title || ''}
 			parentClass={className}
 		/>
 	);
