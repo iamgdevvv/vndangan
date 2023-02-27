@@ -140,8 +140,6 @@ export default function Agenda({
 		return null;
 	}
 
-	console.log('couple', couple);
-
 	return (
 		<>
 			<div className={`${styles.agenda_wrapper} ${className}`}>
