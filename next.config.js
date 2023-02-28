@@ -26,6 +26,7 @@ const nextConfig = {
 		MAIL_TOKEN: process.env.MAIL_TOKEN,
 		RECAPTCHA_SK: process.env.RECAPTCHA_SK,
 	},
+	compress: true
 };
 
 module.exports = nextConfig;
