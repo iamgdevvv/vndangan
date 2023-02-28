@@ -4,9 +4,7 @@
 	@apply w-full flexs-center mb-auto;
 
 	[class~='image-wrapper'] {
-		@apply relative aspect-square;
-		@apply xl:(w-240px);
-		@apply <xl:(w-160px);
+		@apply relative aspect-square w-240px max-w-full;
 		@apply after: (_content absolute top-0 left-0 z-2 w-full h-full bg-contain bg-no-repeat);
 
 		&:after {
