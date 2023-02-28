@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { isEmpty } from 'validate.js';
 
 const loaderOverride = ({ src, width, quality }) =>
 	`/_next/image?url=${src}&w=${width}&q=${quality || 100}`;
@@ -35,6 +36,10 @@ export default function ImageVN({
 				{..._props}
 			/>
 		);
+	}
+
+	if (isEmpty(src)) {
+		elImage = '';
 	}
 
 	return (

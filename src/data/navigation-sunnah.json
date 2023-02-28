@@ -1,0 +1,23 @@
+[
+	{
+		"id": 1,
+		"icon": "BiHomeHeart",
+		"title": "Undangan Pernikahan",
+		"slug": "undangan-pernikahan",
+		"default": true
+	},
+	{
+		"id": 2,
+		"icon": "BiStoreAlt",
+		"title": "Rentetan Acara Pernikahan",
+		"slug": "rentetan-acara-pernikahan",
+		"default": false
+	},
+	{
+		"id": 5,
+		"icon": "BiBookReader",
+		"title": "Buku Tamu & Tanda Kasih",
+		"slug": "buku-tamu-tanda-kasih",
+		"default": false
+	}
+]

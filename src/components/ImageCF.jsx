@@ -31,9 +31,9 @@ export default function ImageCF({ id, width, height, alt, className = '' }) {
 		fetchThumbnail();
 	}, [fetchThumbnail]);
 
-	if (isEmpty(thumbnail?.file?.url)) {
-		return null;
-	}
+	// if (isEmpty(thumbnail?.file?.url)) {
+	// 	return null;
+	// }
 
 	return (
 		<ImageVN

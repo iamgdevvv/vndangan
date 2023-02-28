@@ -6,7 +6,7 @@
 }
 
 .wedding_cards {
-	@apply w-full h-full;
+	@apply w-full h-full max-w-800px mx-auto;
 
 	&>[class~='splide__track'] {
 		@apply h-full overflow-visible;

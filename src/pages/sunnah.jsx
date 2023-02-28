@@ -5,10 +5,10 @@ import { isArray, isEmpty } from 'validate.js';
 
 import { useSiteContext } from '@contexts/SiteContext';
 import queryRest from '@modules/query-rest';
-import dataNavigation from '@data/navigation.json';
+import dataNavigation from '@data/navigation-sunnah.json';
 import SiteNav from '@layouts/SiteNav';
 import SiteBanner from '@layouts/SiteBanner';
-import WeddingCard from '@layouts/WeddingCard';
+import WeddingCardSunnah from '@layouts/WeddingCardSunnah';
 import FormInvite from '@components/Vndangan/FormInvite';
 import styles from '@styles/Vndangan.module.css';
 
@@ -20,7 +20,7 @@ const PopupInviteDynamic = dynamic(() => import('@components/PopupX'), {
 	ssr: false,
 });
 
-export default function Home({
+export default function Sunnah({
 	couple,
 	agenda,
 	gallery,
@@ -89,7 +89,10 @@ export default function Home({
 				/>
 				<meta
 					property='og:image'
-					content={avatarIdentity?.file?.url || '/images/thumbnail-branding.jpg'}
+					content={
+						avatarIdentity?.file?.url ||
+						'/images/thumbnail-branding.jpg'
+					}
 				/>
 
 				<meta
@@ -110,23 +113,20 @@ export default function Home({
 				/>
 				<meta
 					property='twitter:image'
-					content={avatarIdentity?.file?.url || '/images/thumbnail-branding.jpg'}
+					content={
+						avatarIdentity?.file?.url ||
+						'/images/thumbnail-branding.jpg'
+					}
 				/>
 			</Head>
-			<SiteAudioDynamic />
-			<main className={`site-main ${styles.site_main_vndangan}`}>
+			<main className={`site-main ${styles.site_main_vndangan} ${styles.site_main_vndangan__sunnah}`}>
 				{!dataSite?.visitorAgent?.isMobile ? (
-					<>
-						<SiteNav navigation={dataNavigation} className={styles.site_navigation} />
-						<SiteBanner
-							couple={couple}
-							agenda={agenda}
-							gallery={gallery}
-							className={styles.site_banner}
-						/>
-					</>
+					<SiteNav
+						navigation={dataNavigation}
+						className={styles.site_navigation}
+					/>
 				) : null}
-				<WeddingCard
+				<WeddingCardSunnah
 					name={nameInvite}
 					couple={couple}
 					agenda={agenda}

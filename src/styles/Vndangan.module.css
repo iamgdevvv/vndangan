@@ -18,4 +18,14 @@
 		@apply <2xl: (w-660px);
 		@apply <xl: (w-full);
 	}
+
+	&.site_main_vndangan__sunnah {
+		.site_banner {
+			@apply hidden;
+		}
+
+		.site_wedding {
+			@apply w-full;
+		}
+	}
 }

@@ -2,20 +2,29 @@ import { isEmpty, isObject } from 'validate.js';
 
 import ImageCF from '@components/ImageCF';
 import styles from '@styles/Identity.module.css';
+import ImageVN from '@components/ImageVN';
 
-export default function Identity({ data = {}, name }) {
+export default function Identity({ data = {}, name, noThumb = false }) {
 	if (isEmpty(data) || !isObject(data)) {
 		return null;
 	}
 
 	return (
 		<>
-			<ImageCF
-				id={data.thumbnail.sys.id}
-				height={176}
-				width={176}
-				className={styles.photo_wedding_identity}
-			/>
+			{!noThumb ? (
+				<ImageCF
+					id={data.thumbnail.sys.id}
+					height={176}
+					width={176}
+					className={styles.photo_wedding_identity}
+				/>
+			) : (
+				<ImageVN
+					height={176}
+					width={176}
+					parentClass={styles.photo_wedding_identity}
+				/>
+			)}
 			<div className={styles.brides_wedding_identity}>
 				<span className={styles.brides_identity_sublabel}>
 					Mempelai Wanita
