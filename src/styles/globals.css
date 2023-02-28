@@ -195,6 +195,20 @@ textarea {
 	@apply min-h-100px resize-none;
 }
 
+/* @keyframes flash {
+
+	from,
+	50%,
+	to {
+		opacity: 1;
+	}
+
+	25%,
+	75% {
+		opacity: 0;
+	}
+} */
+
 .popup-content.popup-content {
 	@apply border-0 bg-transparent;
 }

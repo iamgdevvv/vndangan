@@ -106,7 +106,7 @@ export default function WeddingCardSunnah({
 								<Identity
 									data={couple}
 									name={name}
-                                    noThumb={true}
+                                    isSunnah={true}
 								/>
 							</div>
 						</SplideSlide>

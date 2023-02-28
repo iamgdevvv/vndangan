@@ -1,10 +1,18 @@
+.photo_identity_wrapper {
+	@apply relative w-full;
 
+	.photo_wedding_identity {
+		&+.photo_wedding_identity {
+			@apply absolute top-0 left-0 w-full animate-duration-6000 animate-loop;
+		}
+	}
+}
 
 .photo_wedding_identity {
 	@apply w-full flexs-center mb-auto;
 
 	[class~='image-wrapper'] {
-		@apply relative aspect-square w-240px max-w-full bg-teal-200;
+		@apply relative aspect-square w-240px max-w-full bg-teal-200 overflow-hidden;
 		@apply after: (_content absolute top-0 left-0 z-2 w-full h-full bg-contain bg-no-repeat);
 
 		&:after {
@@ -30,14 +38,14 @@
 
 	.brides_identity_sublabel {
 		@apply text-zinc-500 !leading-relaxed uppercase mb-6px;
-		@apply md:(text-12px);
-		@apply <md:(text-10px);
+		@apply md: (text-12px);
+		@apply <md: (text-10px);
 	}
 
 	.brides_identity_name {
 		@apply font-semibold !leading-relaxed capitalize mb-6px;
-		@apply md:(text-20px);
-		@apply <md:(text-18px);
+		@apply md: (text-20px);
+		@apply <md: (text-18px);
 	}
 }
 
@@ -49,9 +57,9 @@
 	}
 
 	.brides_invitation_sublabel {
-		@apply !leading-relaxed mb-6px;
-		@apply md:(text-14px);
-		@apply <md:(text-12px);
+		@apply  !leading-relaxed mb-6px;
+		@apply md: (text-14px);
+		@apply <md: (text-12px);
 	}
 
 	.brides_invitation_name {

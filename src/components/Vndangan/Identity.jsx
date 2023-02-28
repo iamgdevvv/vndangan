@@ -4,27 +4,35 @@ import ImageCF from '@components/ImageCF';
 import styles from '@styles/Identity.module.css';
 import ImageVN from '@components/ImageVN';
 
-export default function Identity({ data = {}, name, noThumb = false }) {
+export default function Identity({ data = {}, name, isSunnah = false }) {
 	if (isEmpty(data) || !isObject(data)) {
 		return null;
 	}
 
 	return (
 		<>
-			{!noThumb ? (
+			<div className={styles.photo_identity_wrapper}>
 				<ImageCF
-					id={data.thumbnail.sys.id}
+					id={
+						isSunnah
+							? data?.thumbnailSunnah?.sys?.id
+							: data?.thumbnail?.sys?.id
+					}
 					height={176}
 					width={176}
 					className={styles.photo_wedding_identity}
 				/>
-			) : (
-				<ImageVN
+				<ImageCF
+					id={
+						isSunnah
+							? data?.thumbnailSunnahAlt?.sys?.id
+							: data?.thumbnailAlt?.sys?.id || 0
+					}
 					height={176}
 					width={176}
-					parentClass={styles.photo_wedding_identity}
+					className={`${styles.photo_wedding_identity} animate-flash`}
 				/>
-			)}
+			</div>
 			<div className={styles.brides_wedding_identity}>
 				<span className={styles.brides_identity_sublabel}>
 					Mempelai Wanita
