@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { isArray, isEmpty } from 'validate.js';
+import { isArray, isEmpty, isString } from 'validate.js';
 
 import { useSiteContext } from '@contexts/SiteContext';
 import queryRest from '@modules/query-rest';
@@ -119,12 +119,20 @@ export default function Sunnah({
 					}
 				/>
 			</Head>
-			<main className={`site-main ${styles.site_main_vndangan} ${styles.site_main_vndangan__sunnah}`}>
+			<main className={`site-main ${styles.site_main_vndangan}`}>
 				{!dataSite?.visitorAgent?.isMobile ? (
-					<SiteNav
-						navigation={dataNavigation}
-						className={styles.site_navigation}
-					/>
+					<>
+						<SiteNav
+							navigation={dataNavigation}
+							className={styles.site_navigation}
+						/>
+						<SiteBanner
+							couple={couple}
+							agenda={agenda}
+							gallery={gallery}
+							className={styles.site_banner}
+						/>
+					</>
 				) : null}
 				<WeddingCardSunnah
 					name={nameInvite}
@@ -171,6 +179,8 @@ export async function getServerSideProps({ res, query }) {
 
 	const { CFL_URI, CFL_COUPLE_ID, CFL_TOKEN } = process.env;
 	const { name } = query;
+
+	const getName = (name || '').replace(/-/g, ' ');
 
 	let responseCouple = [];
 
@@ -297,7 +307,7 @@ export async function getServerSideProps({ res, query }) {
 			brideGroom: responseBrideGroom,
 			guestBook: responseGuestBook,
 			guide: responseGuide,
-			name: name || 'Anda & Sekeluarga',
+			name: getName || 'Anda & Sekeluarga',
 		},
 	};
 }

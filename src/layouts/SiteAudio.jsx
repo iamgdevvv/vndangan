@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { useRouter } from 'next/router';
 import { isDefined } from 'validate.js';
 import {
 	BiPlayCircle,
@@ -27,7 +26,6 @@ const playlists = [
 ];
 
 export default function SiteAudio({ className = '' }) {
-	const router = useRouter();
 	const audioRef = useRef();
 	const [toggleAudio, setToggleAudio] = useState(false);
 	const [autoPlay, setAutoPlay] = useState(true);
@@ -74,10 +72,6 @@ export default function SiteAudio({ className = '' }) {
 			setPlaylist(0);
 		}
 	}, [playlist]);
-
-	if (router.query?.noaudio) {
-		return null;
-	}
 
 	return (
 		<div
