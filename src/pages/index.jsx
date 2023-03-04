@@ -172,7 +172,7 @@ export async function getServerSideProps({ res, query }) {
 	const { CFL_URI, CFL_COUPLE_ID, CFL_TOKEN } = process.env;
 	const { name } = query;
 
-	const getName = (name || '').replace(/-./g, ' ');
+	const getName = (name || '').replace(/-/g, ' ');
 
 	let responseCouple = [];
 
