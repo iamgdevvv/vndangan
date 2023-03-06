@@ -21,10 +21,10 @@
 	}
 
 	[class~='splide__pagination'][class~='splide__pagination'] {
-		@apply absolute top-10px bottom-auto left-auto right-10px w-auto inline-flex flex-col p-0;
+		@apply absolute top-10px bottom-auto left-auto right-20px min-w-10px max-h-[calc(100%-40px)] inline-flex flex-col p-0 -mx-2px;
 
 		li {
-			@apply flex;
+			@apply flex px-2px;
 			@apply not-last: (mb-6px);
 		}
 
